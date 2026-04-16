@@ -1,5 +1,5 @@
 /**
- * MedOS email service — SMTP via nodemailer.
+ * MedAI email service — SMTP via nodemailer.
  *
  * Works with any SMTP provider: Gmail, SendGrid, AWS SES, Mailgun,
  * Resend, etc. Configure via environment variables.
@@ -15,8 +15,8 @@ const SMTP_HOST = process.env.SMTP_HOST;
 const SMTP_PORT = parseInt(process.env.SMTP_PORT || '587', 10);
 const SMTP_USER = process.env.SMTP_USER;
 const SMTP_PASS = process.env.SMTP_PASS;
-const FROM_EMAIL = process.env.FROM_EMAIL || 'MedOS <noreply@medos.health>';
-const APP_NAME = 'MedOS';
+const FROM_EMAIL = process.env.FROM_EMAIL || 'MedAI <noreply@medai.health>';
+const APP_NAME = 'MedAI';
 const APP_URL = process.env.APP_URL || 'https://ruslanmv-medibot.hf.space';
 
 const isConfigured = !!(SMTP_HOST && SMTP_USER && SMTP_PASS);

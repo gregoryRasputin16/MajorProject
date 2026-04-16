@@ -6,12 +6,12 @@ import { SYMPTOMS } from '@/lib/symptoms';
 const SITE_URL = 'https://ruslanmv-medibot.hf.space';
 
 export const metadata: Metadata = {
-  title: 'Symptom guides — free, WHO-aligned | MedOS',
+  title: 'Symptom guides — free, WHO-aligned | MedAI',
   description:
     'Browse evidence-based symptom guides: causes, safe self-care, red flags, and when to seek care. Free, multilingual, and aligned with WHO, CDC, and NHS.',
   alternates: { canonical: `${SITE_URL}/symptoms` },
   openGraph: {
-    title: 'Symptom guides — free, WHO-aligned | MedOS',
+    title: 'Symptom guides — free, WHO-aligned | MedAI',
     description:
       'Browse evidence-based symptom guides: causes, safe self-care, red flags, and when to seek care.',
     url: `${SITE_URL}/symptoms`,
@@ -76,7 +76,7 @@ export default function SymptomsIndexPage() {
             href="/"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-br from-blue-500 to-teal-500 text-white font-bold hover:brightness-110 transition-all shadow-lg shadow-blue-500/30"
           >
-            Open the live MedOS assistant
+            Open the live MedAI assistant
             <ChevronRight size={18} />
           </Link>
         </div>

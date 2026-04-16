@@ -1,5 +1,5 @@
 /**
- * MedOS Rate Limiter — sliding-window in-memory rate limiting.
+ * MedAI Rate Limiter — sliding-window in-memory rate limiting.
  *
  * Protects auth endpoints against brute-force attacks.
  * Uses IP-based tracking with configurable windows.

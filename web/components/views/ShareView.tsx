@@ -11,7 +11,7 @@ interface ShareViewProps {
 export function ShareView({ language }: ShareViewProps) {
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedEmbed, setCopiedEmbed] = useState(false);
-  const [appUrl, setAppUrl] = useState("https://medos.health");
+  const [appUrl, setAppUrl] = useState("https://medai.health");
 
   useEffect(() => {
     setAppUrl(window.location.origin);
@@ -30,12 +30,12 @@ export function ShareView({ language }: ShareViewProps) {
   const nativeShare = async () => {
     if (navigator.share) {
       try {
-        await navigator.share({ title: "MedOS — Free AI Medical Assistant", text: "Get free AI medical advice in 20 languages:", url: appUrl });
+        await navigator.share({ title: "MedAI — Free AI Medical Assistant", text: "Get free AI medical advice in 20 languages:", url: appUrl });
       } catch {}
     }
   };
 
-  const SHARE_MSG = encodeURIComponent(`Get free AI medical advice! MedOS — 20 languages, no sign-up: ${appUrl}`);
+  const SHARE_MSG = encodeURIComponent(`Get free AI medical advice! MedAI — 20 languages, no sign-up: ${appUrl}`);
   const ENC_URL = encodeURIComponent(appUrl);
 
   const platforms = [
@@ -49,7 +49,7 @@ export function ShareView({ language }: ShareViewProps) {
   return (
     <div className="flex-1 overflow-y-auto p-6 sm:p-8 pb-mobile-nav scroll-touch">
       <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-        <h2 className="text-2xl font-bold text-ink-base mb-1">Share MedOS</h2>
+        <h2 className="text-2xl font-bold text-ink-base mb-1">Share MedAI</h2>
         <p className="text-sm text-ink-muted mb-6">Help others get free medical guidance</p>
 
         {/* Native share (mobile) */}
@@ -113,7 +113,7 @@ export function ShareView({ language }: ShareViewProps) {
         {/* Embed code */}
         <Section title="Embed on your website" icon={Code}>
           <p className="text-xs text-ink-muted mb-3">
-            Copy this code to embed MedOS on any website, blog, or health portal.
+            Copy this code to embed MedAI on any website, blog, or health portal.
           </p>
           <div className="relative">
             <pre className="bg-surface-2 border border-line/60 rounded-xl p-4 text-xs text-ink-base overflow-x-auto">

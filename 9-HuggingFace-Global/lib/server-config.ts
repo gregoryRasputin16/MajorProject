@@ -71,7 +71,7 @@ export function getDefaultConfig(): ServerConfig {
       port: parseInt(process.env.SMTP_PORT || '587', 10),
       user: process.env.SMTP_USER || '',
       pass: process.env.SMTP_PASS || '',
-      fromEmail: process.env.FROM_EMAIL || 'MedOS <noreply@medos.health>',
+      fromEmail: process.env.FROM_EMAIL || 'MedAI <noreply@medai.health>',
       recoveryEmail: process.env.RECOVERY_EMAIL || '',
     },
     llm: {

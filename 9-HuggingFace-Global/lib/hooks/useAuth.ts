@@ -59,7 +59,7 @@ export function useAuth() {
         if (!res.ok) return { ok: false as const, error: data.error || "Registration failed" };
         persistToken(data.token);
         setUser(data.user);
-        return { ok: true as const, needsVerification: !data.user.emailVerified };
+        return { ok: true as const, needsVerification: false };
       } catch {
         return { ok: false as const, error: "Network error" };
       }

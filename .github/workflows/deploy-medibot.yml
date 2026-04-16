@@ -1,5 +1,5 @@
 # =============================================================================
-# Deploy MedOS Main App to HuggingFace Space (ruslanmv/MediBot)
+# Deploy MedAI Main App to HuggingFace Space (ruslanmv/MediBot)
 # =============================================================================
 # Assembles frontend (web/) + backend (9-HuggingFace-Global/) into a single
 # deploy tree, rewrites API proxy paths, and force-pushes to HF Space.
@@ -47,8 +47,8 @@ jobs:
           echo "::group::Assemble deploy tree"
           bash 9-HuggingFace-Global/scripts/deploy-hf.sh 2>&1 || true
 
-          # The deploy script builds to /tmp/medos-hf-deploy
-          DEPLOY_DIR="/tmp/medos-hf-deploy"
+          # The deploy script builds to /tmp/medai-hf-deploy
+          DEPLOY_DIR="/tmp/medai-hf-deploy"
           if [ ! -d "$DEPLOY_DIR" ]; then
             echo "Deploy script did not create $DEPLOY_DIR — running manually"
             DEPLOY_DIR=$(mktemp -d)
@@ -81,3 +81,4 @@ jobs:
           done
           echo "Push failed after 4 retries" && exit 1
           echo "::endgroup::"
+

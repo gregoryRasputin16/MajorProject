@@ -1,5 +1,5 @@
 """
-MedOS Nearby Finder — HuggingFace Space (Docker SDK)
+MedAI Nearby Finder — HuggingFace Space (Docker SDK)
 
 Find nearby pharmacies and doctors using OpenStreetMap.
 Gradio UI at / + REST API at /api/*.
@@ -14,9 +14,13 @@ import os
 import requests
 import gradio as gr
 
-OVERPASS_URL = "https://overpass-api.de/api/interpreter"
+OVERPASS_URLS = [
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.kumi.systems/api/interpreter",
+    "https://overpass.openstreetmap.fr/api/interpreter",
+]
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
-USER_AGENT = "medos-nearby-finder/1.0"
+USER_AGENT = "medai-nearby-finder/1.0"
 
 
 def haversine_m(lat1, lon1, lat2, lon2):
@@ -28,10 +32,22 @@ def haversine_m(lat1, lon1, lat2, lon2):
 
 def _fetch_entity(lat, lon, radius_m, amenity_tag, category):
     query = f'[out:json][timeout:25];(node["amenity"="{amenity_tag}"](around:{radius_m},{lat},{lon});way["amenity"="{amenity_tag}"](around:{radius_m},{lat},{lon}););out center tags;'
-    resp = requests.post(OVERPASS_URL, data={"data": query}, headers={"User-Agent": USER_AGENT}, timeout=30)
-    resp.raise_for_status()
+    data = None
+    errors = []
+    for overpass_url in OVERPASS_URLS:
+        try:
+            resp = requests.post(overpass_url, data={"data": query}, headers={"User-Agent": USER_AGENT}, timeout=20)
+            resp.raise_for_status()
+            data = resp.json()
+            break
+        except Exception as exc:
+            errors.append(f"{overpass_url}: {exc}")
+            continue
+    if data is None:
+        raise RuntimeError("Overpass failed on all endpoints: " + " | ".join(errors[:3]))
+
     rows = []
-    for e in resp.json().get("elements", []):
+    for e in data.get("elements", []):
         tags = e.get("tags", {})
         center = e.get("center", {})
         p_lat = e.get("lat", center.get("lat"))
@@ -116,11 +132,11 @@ def search_ui(location_or_lat, lon_str, radius_m, entity_type, limit):
 # ============================================================
 
 with gr.Blocks(
-    title="MedOS Nearby Finder",
+    title="MedAI Nearby Finder",
     theme=gr.themes.Soft(primary_hue="blue", secondary_hue="teal"),
     css="footer { display: none !important; }",
 ) as demo:
-    gr.Markdown("# MedOS Nearby Finder\nFind nearby **pharmacies** and **doctors** using OpenStreetMap data.\n\n**API:** `POST /api/search` with `{lat, lon, radius_m, entity_type, limit}`")
+    gr.Markdown("# MedAI Nearby Finder\nFind nearby **pharmacies** and **doctors** using OpenStreetMap data.\n\n**API:** `POST /api/search` with `{lat, lon, radius_m, entity_type, limit}`")
 
     with gr.Row():
         with gr.Column(scale=1):
@@ -192,3 +208,4 @@ if __name__ == "__main__":
         ssr_mode=False,
         share=False,
     )
+

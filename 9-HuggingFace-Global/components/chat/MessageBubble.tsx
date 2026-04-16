@@ -10,7 +10,7 @@ interface MessageBubbleProps {
 
 /**
  * AI answers are rendered as cards with:
- *  - an avatar + "MedOS" header,
+ *  - an avatar + "MedAI" header,
  *  - an optional source chip ("Reviewed with medical guidelines") on the
  *    first assistant reply,
  *  - inline parsing of the bold section headers emitted by the model
@@ -54,7 +54,7 @@ export function MessageBubble({ message, showSourceChip }: MessageBubbleProps) {
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1.5">
             <span className="text-xs font-bold text-ink-base tracking-tight">
-              MedOS
+              MedAI
             </span>
             {showSourceChip && (
               <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-accent-600 dark:text-accent-400 bg-accent-500/10 border border-accent-500/20 px-2 py-0.5 rounded-full">

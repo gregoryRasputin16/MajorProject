@@ -1,4 +1,4 @@
-// i18n - Internationalization support for MedOS
+// i18n - Internationalization support for MedAI
 // Provides translations and language/region detection
 
 export type SupportedLanguage =
@@ -54,8 +54,8 @@ export const LANGUAGE_NAMES: Record<SupportedLanguage, string> = {
 };
 
 export const EMERGENCY_NUMBERS: Record<string, string> = {
-  US: "911",
-  CA: "911",
+  US: "112",
+  CA: "112",
   GB: "999",
   AU: "000",
   NZ: "111",
@@ -72,7 +72,7 @@ export const EMERGENCY_NUMBERS: Record<string, string> = {
   JP: "119",
   KR: "119",
   BR: "192",
-  MX: "911",
+  MX: "112",
   AR: "107",
   CO: "123",
   ZA: "10177",
@@ -89,7 +89,7 @@ export const EMERGENCY_NUMBERS: Record<string, string> = {
   BD: "999",
   VN: "115",
   TH: "1669",
-  PH: "911",
+  PH: "112",
   ID: "118",
   MY: "999",
   DEFAULT: "112",
@@ -231,7 +231,7 @@ export const COUNTRY_TO_LANGUAGE: Record<string, SupportedLanguage> = {
 
 // Language code to likely country
 const LANGUAGE_TO_COUNTRY: Record<string, string> = {
-  en: "US",
+  en: "IN",
   es: "ES",
   fr: "FR",
   pt: "BR",
@@ -262,7 +262,7 @@ export function detectLanguage(): SupportedLanguage {
 }
 
 export function detectCountry(): string {
-  if (typeof Intl === "undefined") return "US";
+  if (typeof Intl === "undefined") return "IN";
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     if (tz && TIMEZONE_TO_COUNTRY[tz]) return TIMEZONE_TO_COUNTRY[tz];
@@ -281,7 +281,7 @@ export function detectCountry(): string {
     if (LANGUAGE_TO_COUNTRY[code]) return LANGUAGE_TO_COUNTRY[code];
   }
 
-  return "US";
+  return "IN";
 }
 
 export function getEmergencyNumber(countryCode: string): string {
@@ -440,7 +440,7 @@ export const translations: Record<string, Record<string, string>> = {
     settings_advanced: "Advanced technical settings",
     settings_advanced_warning: "Advanced settings are for technical users only.",
     settings_hide_advanced: "Hide advanced settings",
-    settings_managed_mode: "Use MedOS managed mode",
+    settings_managed_mode: "Use MedAI managed mode",
     settings_managed_desc: "Best for most people. No setup needed.",
     settings_provider: "AI Provider",
     settings_api_key: "API Key",
@@ -618,10 +618,10 @@ export const translations: Record<string, Record<string, string>> = {
 
     // History
     hist_title: "Conversation History",
-    hist_subtitle: "Your past MedOS sessions, saved locally",
+    hist_subtitle: "Your past MedAI sessions, saved locally",
     hist_clear: "Clear all",
     hist_none: "No conversations yet",
-    hist_none_desc: "Your past MedOS sessions will appear here automatically",
+    hist_none_desc: "Your past MedAI sessions will appear here automatically",
 
     // Follow-up chips
     followup_label: "Follow up",
@@ -818,7 +818,7 @@ export const translations: Record<string, Record<string, string>> = {
     disclaimer_not_emergency: "Do NOT use for emergencies — call your local emergency number.",
     disclaimer_not_diagnostic: "Results may be inaccurate and are NOT diagnostic.",
     disclaimer_consult: "Always consult a licensed healthcare provider before making medical decisions.",
-    disclaimer_no_liability: "MedOS is not liable for any decisions made based on this AI.",
+    disclaimer_no_liability: "MedAI is not liable for any decisions made based on this AI.",
     disclaimer_full: "Health AI provides general guidance only. Not a replacement for a doctor. Not a medical device. Not FDA approved. Do not use for emergencies. Always consult a licensed healthcare provider.",
   },
 
@@ -973,7 +973,7 @@ export const translations: Record<string, Record<string, string>> = {
     symptom_next: "Siguiente",
     symptom_back: "Atrás",
     symptom_submit: "Obtener orientación",
-    settings_managed_mode: "Usar modo administrado MedOS",
+    settings_managed_mode: "Usar modo administrado MedAI",
     settings_managed_desc: "Mejor para la mayoría. Sin configuración necesaria.",
     settings_provider: "Proveedor de IA",
     settings_api_key: "Clave API",
@@ -1073,7 +1073,7 @@ export const translations: Record<string, Record<string, string>> = {
     rec_none_desc: "Agrega resultados de laboratorio, recetas y notas",
     rec_privacy: "Los registros se guardan solo en tu navegador. Nadie más puede verlos.",
     hist_title: "Historial de conversaciones",
-    hist_subtitle: "Tus sesiones pasadas con MedOS",
+    hist_subtitle: "Tus sesiones pasadas con MedAI",
     hist_clear: "Borrar todo",
     hist_none: "Sin conversaciones aún",
     hist_none_desc: "Tus sesiones pasadas aparecerán aquí automáticamente",

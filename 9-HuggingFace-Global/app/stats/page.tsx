@@ -43,7 +43,7 @@ const LANGUAGES = [
 
 /**
  * Public transparency page. Shows the anonymous global session counter,
- * supported languages, trust metrics, and the MedOS health-posture
+ * supported languages, trust metrics, and the MedAI health-posture
  * summary. Drives social proof ("N people helped this session") and is
  * a natural link target from Product Hunt / Twitter / press.
  *
@@ -77,10 +77,10 @@ export default function StatsPage() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 pb-32">
         <header className="mb-8 text-center">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-teal-400 mb-2">
-            MedOS transparency
+            MedAI transparency
           </p>
           <h1 className="text-4xl sm:text-5xl font-bold text-slate-50 tracking-tight mb-3">
-            The numbers behind MedOS
+            The numbers behind MedAI
           </h1>
           <p className="text-lg text-slate-300 max-w-xl mx-auto leading-relaxed">
             Free health guidance, open numbers. No tracking of people —
@@ -102,7 +102,7 @@ export default function StatsPage() {
             )}
           </div>
           <p className="text-sm text-slate-400 mt-3">
-            conversations MedOS has helped with, anonymously, since launch
+            conversations MedAI has helped with, anonymously, since launch
           </p>
         </section>
 
@@ -169,7 +169,7 @@ export default function StatsPage() {
             href="/"
             className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-br from-blue-500 to-teal-500 text-white font-bold hover:brightness-110 transition-all shadow-lg shadow-blue-500/30"
           >
-            Open MedOS
+            Open MedAI
             <ArrowRight size={18} />
           </Link>
         </div>

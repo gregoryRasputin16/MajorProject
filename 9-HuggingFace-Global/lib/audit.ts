@@ -1,5 +1,5 @@
 /**
- * MedOS audit log.
+ * MedAI audit log.
  *
  * Append-only record of security-relevant actions. Used for forensic
  * review ("who changed the SMTP password yesterday?"), incident response,

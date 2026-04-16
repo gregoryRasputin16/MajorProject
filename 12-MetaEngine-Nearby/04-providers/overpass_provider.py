@@ -5,6 +5,7 @@ Kept standalone so this folder can be copied into any service without package-na
 
 from dataclasses import dataclass
 from typing import List, Optional
+import os
 import requests
 
 
@@ -26,7 +27,7 @@ def fetch_nearby_from_overpass(
     radius_m: int,
     entity_type: str,
     overpass_url: str = "https://overpass-api.de/api/interpreter",
-    user_agent: str = "medos-metaengine-nearby/1.0",
+    user_agent: str = "medai-metaengine-nearby/1.0",
 ) -> List[Place]:
     tag = "pharmacy" if entity_type == "pharmacy" else "doctors"
     query = f"""
@@ -39,14 +40,36 @@ def fetch_nearby_from_overpass(
 out center tags;
 """.strip()
 
-    response = requests.post(
-        overpass_url,
-        data={"data": query},
-        headers={"User-Agent": user_agent},
-        timeout=20,
-    )
-    response.raise_for_status()
-    data = response.json()
+    overpass_urls = [
+        u.strip()
+        for u in (
+            os.getenv(
+                "OVERPASS_URLS",
+                f"{overpass_url},https://overpass.kumi.systems/api/interpreter,https://overpass.openstreetmap.fr/api/interpreter",
+            )
+        ).split(",")
+        if u.strip()
+    ]
+
+    data = None
+    errors: List[str] = []
+    for url in overpass_urls:
+        try:
+            response = requests.post(
+                url,
+                data={"data": query},
+                headers={"User-Agent": user_agent},
+                timeout=20,
+            )
+            response.raise_for_status()
+            data = response.json()
+            break
+        except Exception as exc:
+            errors.append(f"{url}: {exc}")
+            continue
+
+    if data is None:
+        raise RuntimeError("Overpass query failed on all endpoints: " + " | ".join(errors[:3]))
 
     places: List[Place] = []
     for e in data.get("elements", []):
@@ -69,3 +92,4 @@ out center tags;
             )
         )
     return places
+

@@ -38,15 +38,15 @@ import { InstallPrompt } from "./ui/InstallPrompt";
 import { buildPatientContext, todayISO } from "@/lib/health-store";
 import { t, type SupportedLanguage } from "@/lib/i18n";
 
-export default function MedOSApp() {
+export default function MedAIApp() {
   return (
     <ThemeProvider>
-      <MedOSAppInner />
+      <MedAIAppInner />
     </ThemeProvider>
   );
 }
 
-function MedOSAppInner() {
+function MedAIAppInner() {
   const [activeNav, setActiveNav] = useState<NavView>("home");
   const settings = useSettings();
   const auth = useAuth();
@@ -311,15 +311,9 @@ function MedOSAppInner() {
             }}
             onRegister={async (e, p, o) => {
               const res = await auth.register(e, p, o);
-              if (res.ok && !res.needsVerification) setActiveNav("home");
-              return res;
-            }}
-            onVerifyEmail={async (code) => {
-              const res = await auth.verifyEmail(code);
               if (res.ok) setActiveNav("home");
               return res;
             }}
-            onResendVerification={auth.resendVerification}
             onForgotPassword={auth.forgotPassword}
             onResetPassword={async (e, c, p) => {
               const res = await auth.resetPassword(e, c, p);
@@ -362,11 +356,9 @@ function MedOSAppInner() {
             }}
             onRegister={async (e, p, o) => {
               const res = await auth.register(e, p, o);
-              if (res.ok && !res.needsVerification) setActiveNav("profile");
+              if (res.ok) setActiveNav("profile");
               return res;
             }}
-            onVerifyEmail={auth.verifyEmail}
-            onResendVerification={auth.resendVerification}
             onForgotPassword={auth.forgotPassword}
             onResetPassword={auth.resetPassword}
             language={settings.language}
@@ -441,7 +433,7 @@ function MedOSAppInner() {
             <div className="w-9 h-9 rounded-xl bg-brand-gradient flex items-center justify-center text-white shadow-soft">
               <Heart size={16} />
             </div>
-            <span className="font-bold text-ink-base tracking-tight text-base">MedOS</span>
+            <span className="font-bold text-ink-base tracking-tight text-base">MedAI</span>
           </div>
 
           <h2 className="hidden md:block font-bold text-lg text-ink-base tracking-tight">

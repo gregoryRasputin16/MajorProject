@@ -133,7 +133,7 @@ export function Sidebar({
               </div>
               <div className="min-w-0">
                 <h1 className="font-bold text-base text-ink-base tracking-tight leading-none">
-                  MedOS
+                  MedAI
                 </h1>
               </div>
             </div>
@@ -197,8 +197,8 @@ export function Sidebar({
                     <div className="my-1.5 border-t border-line/40" />
 
                     <MenuItem icon={Smartphone} label="Install as App" onClick={() => {}} />
-                    <MenuItem icon={Share2} label="Share MedOS" onClick={() => { if (navigator.share) navigator.share({ title: "MedOS", url: window.location.origin }); }} />
-                    <MenuItem icon={Info} label="About MedOS" detail="v1.0" onClick={() => navTo("settings")} />
+                    <MenuItem icon={Share2} label="Share MedAI" onClick={() => { if (navigator.share) navigator.share({ title: "MedAI", url: window.location.origin }); }} />
+                    <MenuItem icon={Info} label="About MedAI" detail="v1.0" onClick={() => navTo("settings")} />
 
                     <div className="my-1.5 border-t border-line/40" />
 
@@ -209,7 +209,7 @@ export function Sidebar({
 
                     <div className="px-3 py-2">
                       <p className="text-[10px] text-ink-subtle leading-snug">
-                        MedOS v1.0 · Free & Open Source
+                        MedAI v1.0 · Free & Open Source
                         <br />
                         Zero data retention · {t("badge_private", language)}
                       </p>

@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import type { MedicineItem, MedicineForm } from "@/lib/health-store";
 
 /**
- * Scan endpoint — calls the MedOS backend proxy at /api/scan,
+ * Scan endpoint — calls the MedAI backend proxy at /api/scan,
  * which injects the HF_TOKEN_INFERENCE server-side and forwards
  * to the Medicine Scanner Space. No token exposed to the browser.
  *
@@ -24,7 +24,7 @@ interface ScanResult {
 type ScannerStatus = "idle" | "waking" | "scanning";
 
 /**
- * Hook for scanning medicine labels via the MedOS Medicine Scanner.
+ * Hook for scanning medicine labels via the MedAI Medicine Scanner.
  *
  * Full lifecycle:
  *   1. Check if Scanner Space is awake (via backend proxy)

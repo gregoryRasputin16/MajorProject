@@ -1,5 +1,5 @@
 /**
- * MedOS at-rest encryption helpers.
+ * MedAI at-rest encryption helpers.
  *
  * Used to wrap user-provided secrets (BYO Hugging Face token, etc.)
  * before persisting them in SQLite. The master key is derived from

@@ -3,7 +3,7 @@
 /**
  * Vercel Deployment Verification Script
  *
- * This script checks if the MedOS web application is ready for Vercel deployment.
+ * This script checks if the MedAI web application is ready for Vercel deployment.
  * It verifies:
  * - Required files exist
  * - Configuration is valid
@@ -91,7 +91,7 @@ const checks = {
 };
 
 async function runVerification() {
-  header('MedOS Vercel Deployment Verification');
+  header('MedAI Vercel Deployment Verification');
 
   let passed = 0;
   let failed = 0;

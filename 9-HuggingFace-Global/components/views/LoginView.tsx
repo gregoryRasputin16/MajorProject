@@ -10,11 +10,10 @@ import {
   AlertCircle,
   CheckCircle,
   KeyRound,
-  ShieldCheck,
 } from "lucide-react";
 import { type SupportedLanguage } from "@/lib/i18n";
 
-type AuthFlow = "login" | "register" | "verify" | "forgot" | "reset";
+type AuthFlow = "login" | "register" | "forgot" | "reset";
 
 interface LoginViewProps {
   onLogin: (email: string, password: string) => Promise<{ ok: boolean; error?: string }>;
@@ -23,8 +22,6 @@ interface LoginViewProps {
     password: string,
     opts?: { displayName?: string },
   ) => Promise<{ ok: boolean; error?: string; needsVerification?: boolean }>;
-  onVerifyEmail: (code: string) => Promise<{ ok: boolean; error?: string }>;
-  onResendVerification: () => Promise<void>;
   onForgotPassword: (email: string) => Promise<{ ok: boolean; message?: string }>;
   onResetPassword: (
     email: string,
@@ -43,8 +40,6 @@ interface LoginViewProps {
 export function LoginView({
   onLogin,
   onRegister,
-  onVerifyEmail,
-  onResendVerification,
   onForgotPassword,
   onResetPassword,
   initialFlow = "login",
@@ -75,19 +70,7 @@ export function LoginView({
     const res = await onRegister(email, password, { displayName: displayName || undefined });
     setLoading(false);
     if (!res.ok) { setError(res.error || "Registration failed"); return; }
-    if (res.needsVerification) {
-      setSuccess("Account created! Check your email for a verification code.");
-      setFlow("verify");
-    }
-  };
-
-  const handleVerify = async () => {
-    if (!code || code.length !== 6) { setError("Enter the 6-digit code from your email"); return; }
-    setLoading(true); clearMessages();
-    const res = await onVerifyEmail(code);
-    setLoading(false);
-    if (res.ok) setSuccess("Email verified! You're all set.");
-    else setError(res.error || "Invalid code");
+    setSuccess("Account created successfully.");
   };
 
   const handleForgot = async () => {
@@ -114,9 +97,7 @@ export function LoginView({
         {/* Header */}
         <div className="text-center mb-8">
           <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-brand-gradient flex items-center justify-center shadow-glow">
-            {flow === "verify" ? (
-              <ShieldCheck size={24} className="text-white" />
-            ) : flow === "forgot" || flow === "reset" ? (
+            {flow === "forgot" || flow === "reset" ? (
               <KeyRound size={24} className="text-white" />
             ) : (
               <User2 size={24} className="text-white" />
@@ -125,14 +106,12 @@ export function LoginView({
           <h2 className="text-2xl font-bold text-ink-base tracking-tight mb-1">
             {flow === "login" && "Welcome back"}
             {flow === "register" && "Create your account"}
-            {flow === "verify" && "Verify your email"}
             {flow === "forgot" && "Forgot password"}
             {flow === "reset" && "Reset password"}
           </h2>
           <p className="text-sm text-ink-muted">
             {flow === "login" && "Log in to sync your health data across devices"}
             {flow === "register" && "Free forever. Your data stays private."}
-            {flow === "verify" && "Enter the 6-digit code we sent to your email"}
             {flow === "forgot" && "We'll send a reset code to your email"}
             {flow === "reset" && "Enter the code from your email and your new password"}
           </p>
@@ -181,34 +160,6 @@ export function LoginView({
             </>
           )}
 
-          {/* === VERIFY EMAIL === */}
-          {flow === "verify" && (
-            <>
-              <div>
-                <label className="text-xs font-semibold text-ink-muted uppercase tracking-wider mb-1.5 block">
-                  Verification code
-                </label>
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={6}
-                  value={code}
-                  onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 6))}
-                  placeholder="000000"
-                  className="w-full bg-surface-2 border border-line/60 text-ink-base rounded-xl px-4 py-4 text-center text-2xl font-black tracking-[0.5em] focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500"
-                  onKeyDown={(e) => e.key === "Enter" && handleVerify()}
-                />
-              </div>
-              <PrimaryButton loading={loading} onClick={handleVerify} label="Verify email" />
-              <div className="text-center">
-                <button onClick={onResendVerification} className="text-sm text-brand-500 hover:text-brand-600 font-semibold">
-                  Resend code
-                </button>
-              </div>
-              <BackLink onClick={() => { setFlow("login"); clearMessages(); }} label="Skip for now" />
-            </>
-          )}
-
           {/* === FORGOT PASSWORD === */}
           {flow === "forgot" && (
             <>
@@ -243,7 +194,7 @@ export function LoginView({
         </div>
 
         <p className="text-center text-[11px] text-ink-subtle mt-8">
-          Account is optional. MedOS works fully without login.
+          Account is optional. MedAI works fully without login.
           <br />
           Creating an account syncs health data across devices.
         </p>

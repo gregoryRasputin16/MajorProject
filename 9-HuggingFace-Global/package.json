@@ -1,7 +1,7 @@
 {
   "name": "medos-global",
   "version": "1.0.0",
-  "description": "MedOS Global - Free AI Medical Assistant for Everyone. 20 languages. No sign-up. Works offline.",
+  "description": "MedAI Global - Free AI Medical Assistant for Everyone. 20 languages. No sign-up. Works offline.",
   "private": true,
   "scripts": {
     "dev": "next dev -p 7860",

@@ -1,5 +1,5 @@
 # ============================================================
-# MedOS HuggingFace Space — Production Dockerfile
+# MedAI HuggingFace Space — Production Dockerfile
 #
 # Enterprise architecture:
 #   web/                    = frontend source of truth

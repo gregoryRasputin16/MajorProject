@@ -58,7 +58,7 @@ export function InstallPrompt() {
           <Download size={18} className="text-white" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-bold text-ink-base">Install MedOS</p>
+          <p className="text-sm font-bold text-ink-base">Install MedAI</p>
           <p className="text-xs text-ink-muted mt-0.5">Add to home screen for instant access. Free, private.</p>
           <div className="flex items-center gap-2 mt-3">
             <button onClick={install} className="px-3 py-1.5 rounded-lg bg-brand-gradient text-white text-xs font-bold hover:brightness-110">

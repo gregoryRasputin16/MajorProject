@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ============================================================
- * MedOS design tokens — light + dark
+ * MedAI design tokens — light + dark
  * ============================================================ */
 :root {
   /* Surfaces (light mode — soft white, never pure #FFFFFF) */
@@ -239,7 +239,7 @@
 
 /* ============================================================
  * RTL (Right-to-Left) support for Arabic (ar) and Urdu (ur)
- * Set via document.documentElement.dir = "rtl" in MedOSApp.tsx
+ * Set via document.documentElement.dir = "rtl" in MedAI app shell
  * ============================================================ */
 [dir="rtl"] {
   /* Base direction */

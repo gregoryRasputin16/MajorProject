@@ -4,7 +4,7 @@ import { getEmergencyInfo } from '@/lib/safety/emergency-numbers';
 
 export async function POST(request: NextRequest) {
   try {
-    const { message, countryCode = 'US' } = await request.json();
+    const { message, countryCode = 'IN' } = await request.json();
 
     if (!message || typeof message !== 'string') {
       return NextResponse.json(

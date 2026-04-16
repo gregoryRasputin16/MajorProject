@@ -1,5 +1,5 @@
 /**
- * MedOS — universal medical knowledge scaffold (deployed-Space edition).
+ * MedAI — universal medical knowledge scaffold (deployed-Space edition).
  *
  * Pure, dependency-free module. Provides a structured system prompt that
  * grounds the model in WHO/CDC/NHS-aligned guidance and localizes every
@@ -94,7 +94,7 @@ export function buildMedicalSystemPrompt(ctx: MedicalContext): string {
   const refusals = REFUSAL_POLICY.map((s) => `  - ${s}`).join('\n');
   const contract = OUTPUT_CONTRACT.map((s) => `  ${s}`).join('\n');
 
-  return `You are MedOS, a caring, professional, worldwide medical AI assistant.
+  return `You are MedAI, a caring, professional, worldwide medical AI assistant.
 
 # Identity & tone
 - Warm, empathetic, plain language, culturally neutral.

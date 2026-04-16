@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import bcrypt from 'bcryptjs';
-import { getDb, genId, genToken, genVerificationCode, codeExpiry, sessionExpiry } from '@/lib/db';
-import { sendVerificationEmail } from '@/lib/email';
+import { getDb, genId, genToken, sessionExpiry } from '@/lib/db';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 const Schema = z.object({
@@ -35,26 +34,21 @@ export async function POST(req: Request) {
 
     const id = genId();
     const hash = bcrypt.hashSync(password, 10);
-    const code = genVerificationCode();
-    const expires = codeExpiry();
 
     db.prepare(
-      `INSERT INTO users (id, email, password, display_name, verification_code, verification_expires)
-       VALUES (?, ?, ?, ?, ?, ?)`,
-    ).run(id, email.toLowerCase(), hash, displayName || null, code, expires);
+      `INSERT INTO users (id, email, password, display_name, email_verified)
+       VALUES (?, ?, ?, ?, 1)`,
+    ).run(id, email.toLowerCase(), hash, displayName || null);
 
     // Auto-login
     const token = genToken();
     db.prepare('INSERT INTO sessions (token, user_id, expires_at) VALUES (?, ?, ?)').run(token, id, sessionExpiry());
 
-    // Send verification email (best-effort, don't block registration)
-    sendVerificationEmail(email, code).catch(() => {});
-
     return NextResponse.json(
       {
-        user: { id, email: email.toLowerCase(), displayName, emailVerified: false },
+        user: { id, email: email.toLowerCase(), displayName, emailVerified: true },
         token,
-        message: 'Account created. Check your email for a verification code.',
+        message: 'Account created successfully.',
       },
       { status: 201 },
     );

@@ -1,5 +1,5 @@
 """
-MedOS Medicine Scanner — AI-powered medicine label extraction.
+MedAI Medicine Scanner — AI-powered medicine label extraction.
 
 Uses HuggingFace Inference Providers (router.huggingface.co) with
 the huggingface_hub InferenceClient for automatic provider selection
@@ -350,3 +350,4 @@ def scan_medicine(image: Image.Image, hf_token: str = "") -> dict:
         "raw_response": raw_response,
         "model_used": model_used,
     }
+

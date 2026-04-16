@@ -9,18 +9,18 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "MedOS — your worldwide medical assistant",
+  title: "MedAI — your worldwide medical assistant",
   description:
-    "Tell MedOS what's bothering you. Instant, private, multilingual health guidance aligned with WHO, CDC, and NHS.",
+    "Tell MedAI what's bothering you. Instant, private, multilingual health guidance aligned with WHO, CDC, and NHS.",
   keywords: ["medical AI", "healthcare", "chatbot", "telemedicine", "WHO", "CDC"],
-  authors: [{ name: "MedOS Team" }],
+  authors: [{ name: "MedAI Team" }],
   manifest: "/manifest.webmanifest",
   icons: {
     icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
     shortcut: "/favicon.svg",
   },
   openGraph: {
-    title: "MedOS — your worldwide medical assistant",
+    title: "MedAI — your worldwide medical assistant",
     description:
       "Private, multilingual health guidance aligned with WHO, CDC, and NHS — available 24/7.",
     type: "website",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   appleWebApp: {
     capable: true,
-    title: "MedOS",
+    title: "MedAI",
   },
   other: {
     "mobile-web-app-capable": "yes",

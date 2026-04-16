@@ -1,5 +1,5 @@
 /**
- * MedOS Health Store — client-side health data persistence.
+ * MedAI Health Store — client-side health data persistence.
  *
  * All data is stored in localStorage as JSON, keyed per-user via
  * `scopedKey()` from ./storage-namespace (see that file for why). An

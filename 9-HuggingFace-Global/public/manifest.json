@@ -1,6 +1,6 @@
 {
-  "name": "MedOS — free AI medical assistant",
-  "short_name": "MedOS",
+  "name": "MedAI — free AI medical assistant",
+  "short_name": "MedAI",
   "description": "Ask any health question in your own language. Free, private, instant guidance aligned with WHO, CDC, and NHS. No sign-up, no paywall.",
   "start_url": "/?source=pwa",
   "scope": "/",
@@ -42,7 +42,7 @@
       "sizes": "1200x630",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "MedOS — worldwide medical AI assistant"
+      "label": "MedAI — worldwide medical AI assistant"
     }
   ],
   "icons": [

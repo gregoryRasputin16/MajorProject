@@ -1,5 +1,5 @@
 # =============================================================================
-# MedOS Global - Makefile
+# MedAI Global - Makefile
 # Free AI Medical Assistant for Hugging Face Spaces
 # =============================================================================
 
@@ -23,7 +23,7 @@ NC     := \033[0m
 .PHONY: help
 help: ## Show this help message
 	@echo ""
-	@echo "  MedOS Global - Development Commands"
+	@echo "  MedAI Global - Development Commands"
 	@echo "  ===================================="
 	@echo ""
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
@@ -153,7 +153,7 @@ docker-build: ## Build Docker image
 
 .PHONY: docker-run
 docker-run: ## Run Docker container locally
-	@echo "$(GREEN)Starting MedOS on http://localhost:7860...$(NC)"
+	@echo "$(GREEN)Starting MedAI on http://localhost:7860...$(NC)"
 	cd $(APP_DIR) && docker run -p 7860:7860 \
 		-e OLLABRIDGE_URL=$${OLLABRIDGE_URL:-https://ruslanmv-ollabridge-cloud.hf.space} \
 		-e HF_TOKEN=$${HF_TOKEN:-} \

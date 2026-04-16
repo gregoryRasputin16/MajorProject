@@ -1,5 +1,5 @@
 /**
- * MedOS database layer — SQLite via better-sqlite3.
+ * MedAI database layer — SQLite via better-sqlite3.
  *
  * Architecture:
  *   - SQLite, single file at `$DB_PATH` (/data/medos.db on HF Spaces).
@@ -216,14 +216,14 @@ export function pruneExpiredSessions(): void {
 
 /**
  * Seed the default admin account on first start. The admin email is
- * read from ADMIN_EMAIL env (default: admin@medos.health) and the
+ * read from ADMIN_EMAIL env (default: admin@medai.health) and the
  * initial password from ADMIN_PASSWORD (default: admin123456).
  *
  * Change the password immediately after first login.
  */
 export function seedAdmin(): void {
   const db = getDb();
-  const adminEmail = (process.env.ADMIN_EMAIL || 'admin@medos.health').toLowerCase();
+  const adminEmail = (process.env.ADMIN_EMAIL || 'admin@medai.health').toLowerCase();
   const adminPassword = process.env.ADMIN_PASSWORD || 'admin123456';
 
   const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(adminEmail);

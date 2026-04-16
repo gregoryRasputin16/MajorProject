@@ -1,5 +1,5 @@
 /**
- * MedOS — universal medical knowledge scaffold.
+ * MedAI — universal medical knowledge scaffold.
  *
  * This module is the single source of truth for the "knowledge base" the
  * model is grounded on. It is intentionally *not* a RAG index — the model
@@ -158,7 +158,7 @@ export function buildMedicalSystemPrompt(ctx: MedicalContext): string {
     .map(([group, items]) => `  - ${group}: ${items.join("; ")}`)
     .join("\n");
 
-  return `You are MedOS, a caring, professional, worldwide medical AI assistant.
+  return `You are MedAI, a caring, professional, worldwide medical AI assistant.
 
 # Identity & tone
 - Warm, empathetic, plain language, culturally neutral.

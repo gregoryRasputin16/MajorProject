@@ -126,7 +126,7 @@ export default function AdminPage() {
               <Lock size={24} className="text-white" />
             </div>
             <h1 className="text-2xl font-bold text-slate-100">Admin Panel</h1>
-            <p className="text-sm text-slate-400 mt-1">MedOS server administration</p>
+            <p className="text-sm text-slate-400 mt-1">MedAI server administration</p>
           </div>
           {loginError && (
             <div className="mb-4 p-3 rounded-xl bg-red-950/50 border border-red-700/50 text-sm text-red-300">
@@ -171,7 +171,7 @@ export default function AdminPage() {
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
             <Shield size={16} className="text-white" />
           </div>
-          <h1 className="font-bold text-lg">MedOS Admin</h1>
+          <h1 className="font-bold text-lg">MedAI Admin</h1>
         </div>
         <button
           onClick={() => { fetchStats(); fetchUsers(); }}

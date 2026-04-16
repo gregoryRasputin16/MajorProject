@@ -25,7 +25,7 @@ const GEO_HEADERS = [
   'x-forwarded-country',
 ] as const;
 
-// Country → best-effort primary language out of the ones MedOS ships.
+// Country → best-effort primary language out of the ones MedAI ships.
 // Kept local to this file so we don't bloat lib/i18n for a single use.
 const COUNTRY_TO_LANGUAGE: Record<string, string> = {
   US: 'en', GB: 'en', CA: 'en', AU: 'en', NZ: 'en', IE: 'en', ZA: 'en',
@@ -94,7 +94,7 @@ async function lookupIpapi(ip: string): Promise<string | null> {
     const timeout = setTimeout(() => controller.abort(), 1500);
     const res = await fetch(`https://ipapi.co/${encodeURIComponent(ip)}/country/`, {
       signal: controller.signal,
-      headers: { 'User-Agent': 'MedOS-Geo/1.0' },
+      headers: { 'User-Agent': 'MedAI-Geo/1.0' },
     });
     clearTimeout(timeout);
     if (!res.ok) return null;
@@ -121,7 +121,7 @@ export async function GET(req: Request): Promise<Response> {
     }
   }
 
-  const finalCountry = country || 'US';
+  const finalCountry = country || 'IN';
   const info = getEmergencyInfo(finalCountry);
   const language = COUNTRY_TO_LANGUAGE[finalCountry] ?? 'en';
 

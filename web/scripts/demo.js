@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * MedOS Web Application Demo Script
+ * MedAI Web Application Demo Script
  *
- * This script demonstrates the core functionality of the MedOS application
+ * This script demonstrates the core functionality of the MedAI application
  * by simulating API calls and showing expected responses.
  */
 
@@ -26,7 +26,7 @@ function header(message) {
 }
 
 async function runDemo() {
-  header('MedOS Web Application - Demo');
+  header('MedAI Web Application - Demo');
 
   log('\n📋 Application Overview:', colors.blue);
   log('  • Multi-Provider AI Support: OpenAI, Gemini, Claude');
@@ -105,7 +105,7 @@ async function runDemo() {
   // Feature 4: UI Components
   header('Feature 4: UI Components');
   log('\nComponent Structure:', colors.yellow);
-  log('  ├─ MedOSApp (Main)');
+  log('  ├─ MedAIApp (Main)');
   log('  │  ├─ Sidebar (Navigation)');
   log('  │  ├─ ChatView (Main Chat Interface)');
   log('  │  │  ├─ MessageBubble (Chat Messages)');

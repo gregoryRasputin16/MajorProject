@@ -100,7 +100,7 @@ function getStatus(type: VitalType, value: string): string {
 
 export function RightPanel({
   language = "en",
-  emergencyNumber = "911",
+  emergencyNumber = "112",
   vitals = [],
   medications = [],
   appointments = [],

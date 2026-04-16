@@ -59,8 +59,8 @@ cp "$WEB_DIR/app/layout.tsx" "$HF_DIR/app/"
 
 # 5. Page shell
 cat > "$HF_DIR/app/page.tsx" << 'EOF'
-import MedOSApp from "@/components/MedOSApp";
-export default function HomePage() { return <MedOSApp />; }
+import MedAIApp from "@/components/MedOSApp";
+export default function HomePage() { return <MedAIApp />; }
 EOF
 
 # 6. Path rewrite: /api/proxy/* → /api/*

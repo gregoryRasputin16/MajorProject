@@ -133,7 +133,7 @@ def test_medibot_chat_emergency_triage():
             except json.JSONDecodeError:
                 pass
     # Emergency response should mention emergency number or calling for help
-    emergency_keywords = ["911", "112", "emergency", "call", "ambulance", "immediately", "urgent"]
+    emergency_keywords = ["112", "emergency", "call", "ambulance", "immediately", "urgent"]
     return len(content) > 20 and any(kw in content.lower() for kw in emergency_keywords)
 
 

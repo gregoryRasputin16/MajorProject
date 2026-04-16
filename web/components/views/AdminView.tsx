@@ -819,9 +819,9 @@ export function AdminView({ language, token }: AdminViewProps) {
                   </div>
                 </div>
 
-                <ConfigInput label="From Email" value={config.smtp.fromEmail} placeholder="MedOS <noreply@medos.health>"
+                <ConfigInput label="From Email" value={config.smtp.fromEmail} placeholder="MedAI <noreply@medai.health>"
                   onChange={(v) => updateConfig("smtp", "fromEmail", v)} fullWidth />
-                <ConfigInput label="Recovery / Support Email" value={config.smtp.recoveryEmail} placeholder="support@medos.health"
+                <ConfigInput label="Recovery / Support Email" value={config.smtp.recoveryEmail} placeholder="support@medai.health"
                   onChange={(v) => updateConfig("smtp", "recoveryEmail", v)} fullWidth
                   hint="Displayed to users for account recovery and support inquiries" />
               </div>

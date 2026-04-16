@@ -22,7 +22,7 @@ export function AboutModal({ onClose }: { onClose: () => void }) {
               <Heart size={20} strokeWidth={2.5} />
             </div>
             <div>
-              <h2 className="font-bold text-lg text-ink-base">MedOS</h2>
+              <h2 className="font-bold text-lg text-ink-base">MedAI</h2>
               <p className="text-xs text-ink-muted">v1.0.0</p>
             </div>
           </div>
@@ -37,7 +37,7 @@ export function AboutModal({ onClose }: { onClose: () => void }) {
         <div className="p-5 space-y-5">
           {/* Description */}
           <p className="text-sm text-ink-base leading-relaxed">
-            MedOS is a free, open-source AI medical assistant that speaks
+            MedAI is a free, open-source AI medical assistant that speaks
             20 languages. It provides general health guidance aligned with
             WHO, CDC, and NHS guidelines — always available, completely
             private, no sign-up required.
@@ -88,7 +88,7 @@ export function AboutModal({ onClose }: { onClose: () => void }) {
 
           {/* Disclaimer */}
           <p className="text-[10px] text-ink-subtle leading-relaxed text-center">
-            MedOS provides general health information only. It is NOT a
+            MedAI provides general health information only. It is NOT a
             substitute for professional medical advice, diagnosis, or
             treatment. Always consult a qualified healthcare provider.
           </p>

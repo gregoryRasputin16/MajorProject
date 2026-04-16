@@ -6,7 +6,7 @@
  * All content is general patient education aligned with WHO, CDC, and
  * NHS public guidance. Nothing here is a diagnosis; every page ends
  * with a clear "not a substitute for a clinician" disclaimer and a CTA
- * pointing users into the live MedOS chatbot.
+ * pointing users into the live MedAI chatbot.
  *
  * IMPORTANT — DO NOT add clinical dosing, prescription instructions, or
  * definitive diagnoses to this file. Keep it educational.
@@ -32,7 +32,7 @@ export interface Symptom {
 export const SYMPTOMS: Symptom[] = [
   {
     slug: 'headache',
-    title: 'Headache — causes, self-care, when to worry | MedOS',
+    title: 'Headache — causes, self-care, when to worry | MedAI',
     metaDescription:
       'What a headache can mean, how to relieve it safely at home, and the red flags that need urgent medical care. Free guidance aligned with WHO, CDC, and NHS.',
     headline: 'Headache',
@@ -80,7 +80,7 @@ export const SYMPTOMS: Symptom[] = [
 
   {
     slug: 'fever',
-    title: 'Fever in adults and children — what to do | MedOS',
+    title: 'Fever in adults and children — what to do | MedAI',
     metaDescription:
       'When a fever is safe to manage at home and when it becomes an emergency. Free, WHO-aligned guidance for adults, children, and infants.',
     headline: 'Fever',
@@ -126,7 +126,7 @@ export const SYMPTOMS: Symptom[] = [
 
   {
     slug: 'chest-pain',
-    title: 'Chest pain — is it serious? | MedOS',
+    title: 'Chest pain — is it serious? | MedAI',
     metaDescription:
       'How to assess chest pain, when to call emergency services, and common non-cardiac causes. Free patient guidance aligned with WHO, CDC, and NHS.',
     headline: 'Chest pain',
@@ -167,7 +167,7 @@ export const SYMPTOMS: Symptom[] = [
 
   {
     slug: 'cough',
-    title: 'Cough — when to worry, how to soothe it | MedOS',
+    title: 'Cough — when to worry, how to soothe it | MedAI',
     metaDescription:
       'Dry vs. wet cough, how long it should last, and the red flags that mean you should be seen. Free guidance aligned with WHO, CDC, and NHS.',
     headline: 'Cough',
@@ -205,7 +205,7 @@ export const SYMPTOMS: Symptom[] = [
 
   {
     slug: 'sore-throat',
-    title: 'Sore throat — viral, bacterial, or something else | MedOS',
+    title: 'Sore throat — viral, bacterial, or something else | MedAI',
     metaDescription:
       'How to tell a viral sore throat from strep, what actually helps, and when to see a clinician. Free guidance aligned with WHO, CDC, and NHS.',
     headline: 'Sore throat',
@@ -243,7 +243,7 @@ export const SYMPTOMS: Symptom[] = [
 
   {
     slug: 'back-pain',
-    title: 'Back pain — causes, relief, and red flags | MedOS',
+    title: 'Back pain — causes, relief, and red flags | MedAI',
     metaDescription:
       'Common causes of back pain, how to relieve it safely at home, and the signs that mean you need imaging or urgent care. Free, WHO-aligned guidance.',
     headline: 'Back pain',
@@ -280,7 +280,7 @@ export const SYMPTOMS: Symptom[] = [
   },
   {
     slug: 'diabetes',
-    title: 'Diabetes — types, symptoms, management | MedOS',
+    title: 'Diabetes — types, symptoms, management | MedAI',
     metaDescription:
       'What diabetes is, how to recognize it, how to manage blood sugar, and when to seek care. Aligned with ADA, SID, and WHO guidelines.',
     headline: 'Diabetes',
@@ -315,7 +315,7 @@ export const SYMPTOMS: Symptom[] = [
   },
   {
     slug: 'thyroid',
-    title: 'Thyroid problems — symptoms, types, when to worry | MedOS',
+    title: 'Thyroid problems — symptoms, types, when to worry | MedAI',
     metaDescription:
       'Hypothyroidism, hyperthyroidism, Hashimoto, Graves — symptoms and when to see a doctor. Aligned with SIE and ETA guidelines.',
     headline: 'Thyroid problems',

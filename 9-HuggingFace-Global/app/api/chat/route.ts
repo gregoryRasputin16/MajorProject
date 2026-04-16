@@ -22,7 +22,7 @@ const RequestSchema = z.object({
   ),
   model: z.string().optional().default('qwen2.5:1.5b'),
   language: z.string().optional().default('en'),
-  countryCode: z.string().optional().default('US'),
+  countryCode: z.string().optional().default('IN'),
 });
 
 export async function POST(request: NextRequest) {

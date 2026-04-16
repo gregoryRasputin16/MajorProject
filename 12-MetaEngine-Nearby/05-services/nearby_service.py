@@ -1,4 +1,4 @@
-"""Service layer for MedOS-compatible meta search.
+"""Service layer for MedAI-compatible meta search.
 
 Features:
 - unified entity search: pharmacy | doctor | all
@@ -81,3 +81,4 @@ def meta_search(lat: float, lon: float, radius_m: int, entity_type: str, limit: 
     ranked = _normalize_and_rank(raw, lat, lon, limit=limit)
     _CACHE[cache_key] = (now, ranked)
     return ranked
+

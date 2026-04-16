@@ -41,15 +41,15 @@ import { InstallPrompt } from "./ui/InstallPrompt";
 import { buildPatientContext, buildContactsContext, todayISO } from "@/lib/health-store";
 import { t, type SupportedLanguage } from "@/lib/i18n";
 
-export default function MedOSApp() {
+export default function MedAIApp() {
   return (
     <ThemeProvider>
-      <MedOSAppInner />
+      <MedAIAppInner />
     </ThemeProvider>
   );
 }
 
-function MedOSAppInner() {
+function MedAIAppInner() {
   const [activeNav, setActiveNav] = useState<NavView>("home");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const settings = useSettings();
@@ -361,15 +361,9 @@ function MedOSAppInner() {
             }}
             onRegister={async (e, p, o) => {
               const res = await auth.register(e, p, o);
-              if (res.ok && !res.needsVerification) setActiveNav("home");
-              return res;
-            }}
-            onVerifyEmail={async (code) => {
-              const res = await auth.verifyEmail(code);
               if (res.ok) setActiveNav("home");
               return res;
             }}
-            onResendVerification={auth.resendVerification}
             onForgotPassword={auth.forgotPassword}
             onResetPassword={async (e, c, p) => {
               const res = await auth.resetPassword(e, c, p);
@@ -412,11 +406,9 @@ function MedOSAppInner() {
             }}
             onRegister={async (e, p, o) => {
               const res = await auth.register(e, p, o);
-              if (res.ok && !res.needsVerification) setActiveNav("profile");
+              if (res.ok) setActiveNav("profile");
               return res;
             }}
-            onVerifyEmail={auth.verifyEmail}
-            onResendVerification={auth.resendVerification}
             onForgotPassword={auth.forgotPassword}
             onResetPassword={auth.resetPassword}
             language={settings.language}
@@ -528,7 +520,7 @@ function MedOSAppInner() {
               <div className="w-7 h-7 rounded-lg bg-brand-gradient flex items-center justify-center text-white">
                 <Heart size={12} />
               </div>
-              <span className="font-bold text-ink-base tracking-tight text-sm">MedOS</span>
+              <span className="font-bold text-ink-base tracking-tight text-sm">MedAI</span>
             </div>
           </div>
 

@@ -1,5 +1,5 @@
 # =============================================================================
-# Sync MedOS Global to Hugging Face Space (force-by-default)
+# Sync MedAI Global to Hugging Face Space (force-by-default)
 # =============================================================================
 # Builds a clean deploy tree from 9-HuggingFace-Global/ and force-pushes
 # to the HuggingFace Space repository.
@@ -7,9 +7,9 @@
 # Required Repository Secrets:
 #   HF_TOKEN    - HuggingFace write token (with Spaces write permission)
 #   HF_USERNAME - HuggingFace username (e.g. ruslanmv)
-#   SPACE_NAME  - HuggingFace Space name (e.g. MedOS-Global)
+#   SPACE_NAME  - HuggingFace Space name (e.g. MedAI-Global)
 # =============================================================================
-name: Sync MedOS Global to Hugging Face Space
+name: Sync MedAI Global to Hugging Face Space
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
     name: Deploy to HF Spaces
     runs-on: ubuntu-latest
     concurrency:
-      group: hf-space-sync-medos-global
+      group: hf-space-sync-medai-global
       cancel-in-progress: false
     env:
       HF_USERNAME: ${{ secrets.HF_USERNAME }}
@@ -42,7 +42,7 @@ jobs:
             echo ""
             echo "Required secrets:"
             echo "  HF_USERNAME  = your HuggingFace username (e.g. ruslanmv)"
-            echo "  SPACE_NAME   = your HuggingFace Space name (e.g. MedOS-Global)"
+            echo "  SPACE_NAME   = your HuggingFace Space name (e.g. MedAI-Global)"
             echo "  HF_TOKEN     = your HuggingFace write token"
             exit 1
           fi
@@ -90,7 +90,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git add -A
-          git commit -m "Deploy MedOS Global from ${GITHUB_SHA::8}"
+          git commit -m "Deploy MedAI Global from ${GITHUB_SHA::8}"
 
           echo "Pushing deploy tree to HF Space main..."
 
@@ -113,3 +113,4 @@ jobs:
 
           echo "Failed to push after ${MAX_RETRIES} attempts."
           exit 1
+

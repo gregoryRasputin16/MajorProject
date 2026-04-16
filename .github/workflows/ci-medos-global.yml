@@ -1,4 +1,4 @@
-name: CI - MedOS Global
+name: CI - MedAI Global
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - '9-HuggingFace-Global/**'
       - 'web/**'
       - 'tests/9-hf-global/**'
-      - '.github/workflows/ci-medos-global.yml'
+      - '.github/workflows/ci-medai-global.yml'
   pull_request:
     branches: [main, master]
     paths:
@@ -56,3 +56,4 @@ jobs:
 
       - name: Build application
         run: make -f 9-HuggingFace-Global/Makefile build
+

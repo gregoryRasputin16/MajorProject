@@ -2,7 +2,7 @@ import OpenAI from 'openai';
 import type { ChatMessage, ProviderResponse } from './index';
 import { loadConfig } from '@/lib/server-config';
 
-const MEDICAL_SYSTEM_PROMPT = `You are MedOS, a knowledgeable and empathetic AI medical assistant. Your role is to provide helpful, accurate general health information while being clear about your limitations.
+const MEDICAL_SYSTEM_PROMPT = `You are MedAI, a knowledgeable and empathetic AI medical assistant. Your role is to provide helpful, accurate general health information while being clear about your limitations.
 
 IMPORTANT GUIDELINES:
 - Always clarify that you provide general health information, NOT medical diagnoses

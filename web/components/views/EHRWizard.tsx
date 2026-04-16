@@ -108,7 +108,7 @@ export function EHRWizard({ onComplete, onCancel, language }: EHRWizardProps) {
             Health Profile
           </h2>
           <p className="text-sm text-ink-muted mt-1">
-            Optional — helps MedOS give you personalized advice
+            Optional — helps MedAI give you personalized advice
           </p>
         </div>
 

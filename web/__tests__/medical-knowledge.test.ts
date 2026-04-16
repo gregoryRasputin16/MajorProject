@@ -32,17 +32,17 @@ describe("medical-knowledge", () => {
     const prompt = buildMedicalSystemPrompt({
       country: "US",
       language: "en",
-      emergencyNumber: "911",
+      emergencyNumber: "112",
     });
     expect(prompt).toContain("imperial");
-    expect(prompt).toContain("911");
+    expect(prompt).toContain("112");
   });
 
   it("allows explicit units override", () => {
     const prompt = buildMedicalSystemPrompt({
       country: "US",
       language: "en",
-      emergencyNumber: "911",
+      emergencyNumber: "112",
       units: "metric",
     });
     expect(prompt).toContain("metric");

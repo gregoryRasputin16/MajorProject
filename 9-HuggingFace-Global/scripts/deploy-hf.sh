@@ -71,8 +71,8 @@ cp "$WEB_DIR/tailwind.config.ts" "$BUILD_DIR/"
 
 # Page shell
 cat > "$BUILD_DIR/app/page.tsx" << 'EOF'
-import MedOSApp from "@/components/MedOSApp";
-export default function HomePage() { return <MedOSApp />; }
+import MedAIApp from "@/components/MedOSApp";
+export default function HomePage() { return <MedAIApp />; }
 EOF
 
 # Remove Vercel-only proxy route if it leaked in

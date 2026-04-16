@@ -25,7 +25,7 @@ export function ChatView({
   isTyping,
   onSendMessage,
   language = "en",
-  emergencyNumber = "911",
+  emergencyNumber = "112",
   voiceEnabled = true,
   readAloud = false,
   onNavigateEmergency,

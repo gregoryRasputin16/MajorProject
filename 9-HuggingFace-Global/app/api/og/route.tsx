@@ -25,7 +25,7 @@ export async function GET(req: Request): Promise<Response> {
       rawQuery.length > 120 ? rawQuery.slice(0, 117) + '…' : rawQuery;
 
     const subtitle = title
-      ? 'Ask MedOS — free, private, in your language'
+      ? 'Ask MedAI — free, private, in your language'
       : 'Free AI medical assistant — 20 languages, no sign-up';
 
     const headline = title || 'Tell me what\'s bothering you.';
@@ -82,7 +82,7 @@ export async function GET(req: Request): Promise<Response> {
                     lineHeight: 1,
                   }}
                 >
-                  MedOS
+                  MedAI
                 </div>
                 <div
                   style={{
@@ -145,7 +145,7 @@ export async function GET(req: Request): Promise<Response> {
                   marginBottom: '22px',
                 }}
               >
-                Ask MedOS
+                Ask MedAI
               </div>
             )}
             <div

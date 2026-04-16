@@ -15,8 +15,8 @@ export interface EmergencyInfo {
 }
 
 export const EMERGENCY_NUMBERS: Record<string, EmergencyInfo> = {
-  US: { country: 'United States', code: 'US', emergency: '911', ambulance: '911', police: '911', fire: '911', crisisHotline: '988' },
-  CA: { country: 'Canada', code: 'CA', emergency: '911', ambulance: '911', police: '911', fire: '911', crisisHotline: '988' },
+  US: { country: 'United States', code: 'US', emergency: '112', ambulance: '112', police: '112', fire: '112', crisisHotline: '988' },
+  CA: { country: 'Canada', code: 'CA', emergency: '112', ambulance: '112', police: '112', fire: '112', crisisHotline: '988' },
   GB: { country: 'United Kingdom', code: 'GB', emergency: '999', ambulance: '999', police: '999', fire: '999', crisisHotline: '116 123' },
   AU: { country: 'Australia', code: 'AU', emergency: '000', ambulance: '000', police: '000', fire: '000', crisisHotline: '13 11 14' },
   DE: { country: 'Germany', code: 'DE', emergency: '112', ambulance: '112', police: '110', fire: '112', crisisHotline: '0800 111 0 111' },
@@ -42,8 +42,8 @@ export const EMERGENCY_NUMBERS: Record<string, EmergencyInfo> = {
   JP: { country: 'Japan', code: 'JP', emergency: '110', ambulance: '119', police: '110', fire: '119', crisisHotline: '0120-783-556' },
   KR: { country: 'South Korea', code: 'KR', emergency: '112', ambulance: '119', police: '112', fire: '119', crisisHotline: '1393' },
   BR: { country: 'Brazil', code: 'BR', emergency: '190', ambulance: '192', police: '190', fire: '193', crisisHotline: '188' },
-  MX: { country: 'Mexico', code: 'MX', emergency: '911', ambulance: '911', police: '911', fire: '911', crisisHotline: '800 290 0024' },
-  AR: { country: 'Argentina', code: 'AR', emergency: '911', ambulance: '107', police: '911', fire: '100' },
+  MX: { country: 'Mexico', code: 'MX', emergency: '112', ambulance: '112', police: '112', fire: '112', crisisHotline: '800 290 0024' },
+  AR: { country: 'Argentina', code: 'AR', emergency: '112', ambulance: '107', police: '112', fire: '100' },
   CO: { country: 'Colombia', code: 'CO', emergency: '123', ambulance: '123', police: '123', fire: '119' },
   CL: { country: 'Chile', code: 'CL', emergency: '131', ambulance: '131', police: '133', fire: '132' },
   PE: { country: 'Peru', code: 'PE', emergency: '105', ambulance: '116', police: '105', fire: '116' },
@@ -53,14 +53,14 @@ export const EMERGENCY_NUMBERS: Record<string, EmergencyInfo> = {
   GH: { country: 'Ghana', code: 'GH', emergency: '112', ambulance: '112', police: '191', fire: '192' },
   EG: { country: 'Egypt', code: 'EG', emergency: '123', ambulance: '123', police: '122', fire: '180' },
   MA: { country: 'Morocco', code: 'MA', emergency: '15', ambulance: '15', police: '19', fire: '15' },
-  ET: { country: 'Ethiopia', code: 'ET', emergency: '911', ambulance: '907', police: '911', fire: '939' },
+  ET: { country: 'Ethiopia', code: 'ET', emergency: '112', ambulance: '907', police: '112', fire: '939' },
   TZ: { country: 'Tanzania', code: 'TZ', emergency: '112', ambulance: '114', police: '112', fire: '114' },
-  SA: { country: 'Saudi Arabia', code: 'SA', emergency: '911', ambulance: '997', police: '999', fire: '998' },
+  SA: { country: 'Saudi Arabia', code: 'SA', emergency: '112', ambulance: '997', police: '999', fire: '998' },
   AE: { country: 'UAE', code: 'AE', emergency: '999', ambulance: '998', police: '999', fire: '997' },
   PK: { country: 'Pakistan', code: 'PK', emergency: '115', ambulance: '115', police: '15', fire: '16' },
   BD: { country: 'Bangladesh', code: 'BD', emergency: '999', ambulance: '999', police: '999', fire: '999', crisisHotline: '16789' },
   ID: { country: 'Indonesia', code: 'ID', emergency: '112', ambulance: '118', police: '110', fire: '113', crisisHotline: '119' },
-  PH: { country: 'Philippines', code: 'PH', emergency: '911', ambulance: '911', police: '911', fire: '911' },
+  PH: { country: 'Philippines', code: 'PH', emergency: '112', ambulance: '112', police: '112', fire: '112' },
   TH: { country: 'Thailand', code: 'TH', emergency: '1669', ambulance: '1669', police: '191', fire: '199', crisisHotline: '1323' },
   VN: { country: 'Vietnam', code: 'VN', emergency: '115', ambulance: '115', police: '113', fire: '114' },
   MY: { country: 'Malaysia', code: 'MY', emergency: '999', ambulance: '999', police: '999', fire: '994' },
@@ -72,7 +72,7 @@ export const EMERGENCY_NUMBERS: Record<string, EmergencyInfo> = {
   MM: { country: 'Myanmar', code: 'MM', emergency: '199', ambulance: '192', police: '199', fire: '191' },
   LK: { country: 'Sri Lanka', code: 'LK', emergency: '110', ambulance: '110', police: '119', fire: '110' },
   NP: { country: 'Nepal', code: 'NP', emergency: '100', ambulance: '102', police: '100', fire: '101' },
-  UG: { country: 'Uganda', code: 'UG', emergency: '999', ambulance: '911', police: '999', fire: '999' },
+  UG: { country: 'Uganda', code: 'UG', emergency: '999', ambulance: '112', police: '999', fire: '999' },
   CD: { country: 'DR Congo', code: 'CD', emergency: '112', ambulance: '112', police: '112', fire: '112' },
   CM: { country: 'Cameroon', code: 'CM', emergency: '112', ambulance: '112', police: '117', fire: '118' },
   SN: { country: 'Senegal', code: 'SN', emergency: '15', ambulance: '15', police: '17', fire: '18' },
@@ -128,8 +128,8 @@ export function detectCountryFromTimezone(): string {
       'Asia/Jerusalem': 'IL', 'Asia/Baghdad': 'IQ', 'Asia/Tehran': 'IR',
       'Asia/Colombo': 'LK', 'Asia/Kathmandu': 'NP',
     };
-    return tzToCountry[tz] || 'US';
+    return tzToCountry[tz] || 'IN';
   } catch {
-    return 'US';
+    return 'IN';
   }
 }

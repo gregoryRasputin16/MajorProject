@@ -24,7 +24,7 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: Params): Metadata {
   const symptom = getSymptomBySlug(params.slug);
-  if (!symptom) return { title: 'Symptom not found — MedOS' };
+  if (!symptom) return { title: 'Symptom not found — MedAI' };
 
   const ogUrl = `${SITE_URL}/api/og?q=${encodeURIComponent(symptom.headline)}`;
   const canonical = `${SITE_URL}/symptoms/${symptom.slug}`;
@@ -37,7 +37,7 @@ export function generateMetadata({ params }: Params): Metadata {
       title: symptom.title,
       description: symptom.metaDescription,
       url: canonical,
-      siteName: 'MedOS',
+      siteName: 'MedAI',
       type: 'article',
       images: [{ url: ogUrl, width: 1200, height: 630, alt: symptom.headline }],
     },
@@ -183,7 +183,7 @@ export default function SymptomPage({ params }: Params) {
             Get a personalized answer in your language.
           </h2>
           <p className="text-slate-300 mb-4 leading-relaxed">
-            MedOS is free, private, and takes no account. Describe your
+            MedAI is free, private, and takes no account. Describe your
             situation and get step-by-step guidance.
           </p>
           <Link

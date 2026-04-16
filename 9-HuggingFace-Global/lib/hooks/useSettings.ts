@@ -21,7 +21,7 @@ export function useSettings() {
   // New patient-friendly settings
   const [advancedMode, setAdvancedMode] = useState(false);
   const [language, setLanguage] = useState<SupportedLanguage>("en");
-  const [country, setCountry] = useState("US");
+  const [country, setCountry] = useState("IN");
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const [readAloud, setReadAloud] = useState(false);
   const [textSize, setTextSize] = useState<TextSize>("medium");

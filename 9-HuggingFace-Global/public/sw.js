@@ -1,5 +1,5 @@
 /**
- * MedOS Global - Service Worker
+ * MedAI Global - Service Worker
  * Provides offline support via caching strategies:
  * 1. App Shell: cache-first (HTML, CSS, JS)
  * 2. API calls: network-first, fallback to cached FAQ

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ============================================================
- * MedOS design tokens — light + dark
+ * MedAI design tokens — light + dark
  * ============================================================ */
 :root {
   /* Surfaces (light mode — soft white, never pure #FFFFFF) */

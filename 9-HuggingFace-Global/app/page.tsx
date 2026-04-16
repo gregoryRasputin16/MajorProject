@@ -1,2 +1,2 @@
-import MedOSApp from "@/components/MedOSApp";
-export default function HomePage() { return <MedOSApp />; }
+import MedAIApp from "@/components/MedOSApp";
+export default function HomePage() { return <MedAIApp />; }

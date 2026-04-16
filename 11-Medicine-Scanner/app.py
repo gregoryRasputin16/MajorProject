@@ -1,5 +1,5 @@
 """
-MedOS Medicine Scanner — HuggingFace Space (Gradio SDK)
+MedAI Medicine Scanner — HuggingFace Space (Gradio SDK)
 
 Scan medicine labels with AI (Qwen2.5-VL) and return structured JSON.
 Uses HF Spaces native Gradio SDK — no Docker needed.
@@ -87,7 +87,7 @@ demo = gr.Interface(
     inputs=[
         gr.Image(label="Medicine Image", type="filepath"),
         gr.Textbox(
-            label="HuggingFace Token (optional — auto-provided when used from MedOS)",
+            label="HuggingFace Token (optional — auto-provided when used from MedAI)",
             placeholder="hf_... — only needed for standalone use",
             type="password",
         ),
@@ -98,11 +98,11 @@ demo = gr.Interface(
     ],
     examples=example_images if example_images else None,
     cache_examples=False,
-    title="MedOS Medicine Scanner",
+    title="MedAI Medicine Scanner",
     description=(
         "Scan medicine packages, labels, or prescriptions with your camera. "
         "The AI extracts drug name, dosage, form, expiry date, and instructions automatically.\n\n"
-        "**From MedOS:** Token is provided automatically — just scan.\n"
+        "**From MedAI:** Token is provided automatically — just scan.\n"
         "**Standalone:** Enter a free [HuggingFace token](https://huggingface.co/settings/tokens/new?ownUserPermissions=inference.serverless.write&tokenType=fineGrained) "
         "with *'Make calls to Inference Providers'* permission."
     ),
@@ -115,3 +115,4 @@ demo = gr.Interface(
 
 if __name__ == "__main__":
     demo.launch()
+

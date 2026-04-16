@@ -1,7 +1,7 @@
 /**
  * Client-side storage namespacing — per-user isolation for localStorage.
  *
- * Every MedOS health-store read/write goes through `scopedKey(suffix)`.
+ * Every MedAI health-store read/write goes through `scopedKey(suffix)`.
  * The prefix is owned by this module and derived from the active user:
  *
  *   logged-in user "u_abc"   →  "medos:u:u_abc:<suffix>"
@@ -160,7 +160,7 @@ export function wipeUserScopedStorage(userId?: string): void {
 }
 
 /**
- * Wipe literally every MedOS key (scoped, anonymous, and legacy). Intended
+ * Wipe literally every MedAI key (scoped, anonymous, and legacy). Intended
  * for hard resets / delete-account flows, not routine logouts.
  */
 export function wipeAllMedosStorage(): void {

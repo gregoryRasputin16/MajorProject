@@ -1,5 +1,5 @@
 /**
- * MedOS Health Store — client-side health data persistence.
+ * MedAI Health Store — client-side health data persistence.
  *
  * All data is stored in localStorage as JSON. Zero server calls, zero
  * accounts, fully private. The patient owns their data and can export

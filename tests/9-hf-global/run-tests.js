@@ -105,8 +105,8 @@ assert(
 );
 
 assert(
-  emergencyContent.includes("US:") && emergencyContent.includes("'911'"),
-  'emergency-numbers includes US with 911'
+  emergencyContent.includes("US:") && emergencyContent.includes("'112'"),
+  'emergency-numbers includes US with 112'
 );
 
 assert(

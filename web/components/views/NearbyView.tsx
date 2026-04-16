@@ -68,7 +68,7 @@ export function NearbyView({ language, onSaveContact }: NearbyViewProps) {
     try {
       const res = await fetch(
         `${GEOCODE_API}?q=${encodeURIComponent(query)}&format=json&limit=1&addressdetails=1`,
-        { headers: { "User-Agent": "MedOS/1.0" } }
+        { headers: { "User-Agent": "MedAI/1.0" } }
       );
       const data = await res.json();
       if (data.length > 0) {
@@ -110,7 +110,7 @@ export function NearbyView({ language, onSaveContact }: NearbyViewProps) {
         try {
           const res = await fetch(
             `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&zoom=16`,
-            { headers: { "User-Agent": "MedOS/1.0" } }
+            { headers: { "User-Agent": "MedAI/1.0" } }
           );
           const data = await res.json();
           const addr = data.address || {};
