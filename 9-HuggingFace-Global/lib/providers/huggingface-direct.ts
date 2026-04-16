@@ -138,15 +138,20 @@ export async function streamWithHuggingFace(
     async start(controller) {
       try {
         const decoder = new TextDecoder();
+        let buffer = '';
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
 
-          const chunk = decoder.decode(value, { stream: true });
-          const lines = chunk.split('\n');
+          buffer += decoder.decode(value, { stream: true });
+          const frames = buffer.split('\n\n');
+          buffer = frames.pop() || '';
 
-          for (const line of lines) {
-            if (line.startsWith('data: ') && line !== 'data: [DONE]') {
+          for (const frame of frames) {
+            const lines = frame.split('\n');
+            for (const line of lines) {
+              if (!line.startsWith('data: ')) continue;
+              if (line === 'data: [DONE]') continue;
               try {
                 const parsed = JSON.parse(line.slice(6));
                 const content = parsed.choices?.[0]?.delta?.content;
@@ -161,6 +166,29 @@ export async function streamWithHuggingFace(
               } catch {
                 // skip malformed chunks
               }
+            }
+          }
+        }
+
+        // Try to parse any trailing frame left in the buffer.
+        if (buffer.trim()) {
+          const lines = buffer.split('\n');
+          for (const line of lines) {
+            if (!line.startsWith('data: ')) continue;
+            if (line === 'data: [DONE]') continue;
+            try {
+              const parsed = JSON.parse(line.slice(6));
+              const content = parsed.choices?.[0]?.delta?.content;
+              if (content) {
+                const data = JSON.stringify({
+                  choices: [{ delta: { content } }],
+                  provider: 'huggingface',
+                  model: activeModel,
+                });
+                controller.enqueue(encoder.encode(`data: ${data}\n\n`));
+              }
+            } catch {
+              // skip malformed chunks
             }
           }
         }

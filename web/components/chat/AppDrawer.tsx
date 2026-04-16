@@ -24,6 +24,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { t, type SupportedLanguage } from "@/lib/i18n";
+import type { ChatSession } from "@/lib/hooks/useChat";
 
 interface AppDrawerProps {
   open: boolean;
@@ -31,6 +32,10 @@ interface AppDrawerProps {
   activeKey: string;
   onNavigate: (key: string) => void;
   onNewChat?: () => void;
+  chatSessions?: ChatSession[];
+  activeChatId?: string;
+  onSelectChat?: (chatId: string) => void;
+  onDeleteChat?: (chatId: string) => void;
   isAuthenticated?: boolean;
   isAdmin?: boolean;
   username?: string;
@@ -44,6 +49,10 @@ export function AppDrawer({
   activeKey,
   onNavigate,
   onNewChat,
+  chatSessions = [],
+  activeChatId,
+  onSelectChat,
+  onDeleteChat,
   isAuthenticated = false,
   isAdmin = false,
   username,
@@ -125,6 +134,47 @@ export function AppDrawer({
             {t("drawer_new_chat", language)}
           </button>
         </div>
+
+        {chatSessions.length > 0 && (
+          <div className="px-4 pb-3">
+            <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-ink-subtle px-1 pb-1.5">
+              Recent chats
+            </div>
+            <div className="space-y-1 max-h-40 overflow-y-auto">
+              {chatSessions.slice(0, 6).map((session) => (
+                <div
+                  key={session.id}
+                  className={`flex items-center gap-2 px-2 py-1.5 rounded-lg ${
+                    activeChatId === session.id && activeKey === "chat"
+                      ? "bg-brand-500/10"
+                      : "hover:bg-surface-2"
+                  }`}
+                >
+                  <button
+                    onClick={() => {
+                      onSelectChat?.(session.id);
+                      nav("chat");
+                    }}
+                    className="flex-1 text-left min-w-0"
+                  >
+                    <span className="text-xs text-ink-base truncate block">
+                      {session.title}
+                    </span>
+                  </button>
+                  {chatSessions.length > 1 && (
+                    <button
+                      onClick={() => onDeleteChat?.(session.id)}
+                      className="text-ink-subtle hover:text-danger-500"
+                      aria-label="Delete chat"
+                    >
+                      <X size={12} />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto px-3 scroll-touch">

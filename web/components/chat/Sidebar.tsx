@@ -32,10 +32,13 @@ import {
   ChevronDown,
   MoreHorizontal,
   Smartphone,
+  Plus,
+  Trash2,
 } from "lucide-react";
 import { NavItem } from "./NavItem";
 import { AboutModal } from "../ui/AboutModal";
 import { t, type SupportedLanguage } from "@/lib/i18n";
+import type { ChatSession } from "@/lib/hooks/useChat";
 
 export type NavView =
   | "home"
@@ -62,6 +65,11 @@ export type NavView =
 interface SidebarProps {
   activeNav: NavView;
   setActiveNav: (nav: NavView) => void;
+  chatSessions?: ChatSession[];
+  activeChatId?: string;
+  onNewChat?: () => void;
+  onSelectChat?: (chatId: string) => void;
+  onDeleteChat?: (chatId: string) => void;
   language?: SupportedLanguage;
   advancedMode?: boolean;
   isAuthenticated?: boolean;
@@ -75,6 +83,11 @@ const COLLAPSED_KEY = "medos_sidebar_collapsed";
 export function Sidebar({
   activeNav,
   setActiveNav,
+  chatSessions = [],
+  activeChatId,
+  onNewChat,
+  onSelectChat,
+  onDeleteChat,
   language = "en",
   isAuthenticated = false,
   isAdmin = false,
@@ -162,6 +175,55 @@ export function Sidebar({
         <nav className="flex-1 overflow-y-auto space-y-0.5">
           <NavItem icon={Home} label={t("nav_home", language)} active={activeNav === "home"} onClick={() => setActiveNav("home")} collapsed={collapsed} />
           <NavItem icon={MessageCircle} label={t("nav_ask", language)} active={activeNav === "chat"} onClick={() => setActiveNav("chat")} collapsed={collapsed} />
+          {!collapsed && (
+            <>
+              <div className="mt-2 mb-2 px-2">
+                <button
+                  onClick={() => onNewChat?.()}
+                  className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-brand-gradient text-white text-sm font-semibold hover:brightness-110 transition-all"
+                >
+                  <Plus size={14} />
+                  New chat
+                </button>
+              </div>
+              {chatSessions.length > 0 && (
+                <div className="space-y-1 mb-3 px-2">
+                  {chatSessions.slice(0, 8).map((session) => (
+                    <div
+                      key={session.id}
+                      className={`group flex items-center gap-2 rounded-lg px-2 py-1.5 ${
+                        activeChatId === session.id && activeNav === "chat"
+                          ? "bg-brand-500/10 border border-brand-500/20"
+                          : "hover:bg-surface-2"
+                      }`}
+                    >
+                      <button
+                        onClick={() => {
+                          onSelectChat?.(session.id);
+                          setActiveNav("chat");
+                        }}
+                        className="flex-1 text-left min-w-0"
+                        title={session.title}
+                      >
+                        <span className="text-xs text-ink-base truncate block">
+                          {session.title}
+                        </span>
+                      </button>
+                      {chatSessions.length > 1 && (
+                        <button
+                          onClick={() => onDeleteChat?.(session.id)}
+                          className="opacity-0 group-hover:opacity-100 text-ink-subtle hover:text-danger-500 transition-opacity"
+                          title="Delete chat"
+                        >
+                          <Trash2 size={12} />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
 
           {!collapsed && <SectionLabel>{t("nav_health_tracker", language)}</SectionLabel>}
           {collapsed && <div className="my-2 border-t border-line/50" />}

@@ -54,7 +54,17 @@ function MedOSAppInner() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const settings = useSettings();
   const auth = useAuth();
-  const { messages, isTyping, error, sendMessage, clearMessages } = useChat();
+  const {
+    messages,
+    sessions,
+    activeThreadId,
+    isTyping,
+    error,
+    sendMessage,
+    createNewChat,
+    switchChat,
+    deleteChat,
+  } = useChat();
   const health = useHealthStore(auth.token);
   const notif = useNotifications();
 
@@ -468,7 +478,11 @@ function MedOSAppInner() {
         onClose={() => setDrawerOpen(false)}
         activeKey={activeNav}
         onNavigate={(key) => setActiveNav(key as NavView)}
-        onNewChat={() => { clearMessages(); setActiveNav("home"); }}
+        onNewChat={() => { createNewChat(); setActiveNav("chat"); }}
+        chatSessions={sessions}
+        activeChatId={activeThreadId}
+        onSelectChat={switchChat}
+        onDeleteChat={deleteChat}
         isAuthenticated={auth.isAuthenticated}
         isAdmin={auth.user?.isAdmin}
         username={auth.user?.displayName || auth.user?.email}
@@ -481,6 +495,14 @@ function MedOSAppInner() {
       <Sidebar
         activeNav={activeNav}
         setActiveNav={setActiveNav}
+        chatSessions={sessions}
+        activeChatId={activeThreadId}
+        onNewChat={() => {
+          createNewChat();
+          setActiveNav("chat");
+        }}
+        onSelectChat={switchChat}
+        onDeleteChat={deleteChat}
         language={settings.language}
         advancedMode={settings.advancedMode}
         isAuthenticated={auth.isAuthenticated}
