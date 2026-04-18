@@ -17,20 +17,28 @@ import {
   Clock,
   User2,
   LogIn,
-  UserPlus,
+  LogOut,
+  ClipboardList,
   PanelLeftClose,
   PanelLeftOpen,
   Globe,
+  MapPin,
+  Contact,
   HelpCircle,
   Share2,
   Info,
   ExternalLink,
   ChevronUp,
   ChevronDown,
+  MoreHorizontal,
   Smartphone,
+  Plus,
+  Trash2,
 } from "lucide-react";
 import { NavItem } from "./NavItem";
+import { AboutModal } from "../ui/AboutModal";
 import { t, type SupportedLanguage } from "@/lib/i18n";
+import type { ChatSession } from "@/lib/hooks/useChat";
 
 export type NavView =
   | "home"
@@ -46,19 +54,28 @@ export type NavView =
   | "history"
   | "settings"
   | "login"
-  | "register"
   | "profile"
   | "ehr-wizard"
   | "my-medicines"
-  | "share";
+  | "share"
+  | "admin"
+  | "nearby"
+  | "contacts";
 
 interface SidebarProps {
   activeNav: NavView;
   setActiveNav: (nav: NavView) => void;
+  chatSessions?: ChatSession[];
+  activeChatId?: string;
+  onNewChat?: () => void;
+  onSelectChat?: (chatId: string) => void;
+  onDeleteChat?: (chatId: string) => void;
   language?: SupportedLanguage;
   advancedMode?: boolean;
   isAuthenticated?: boolean;
+  isAdmin?: boolean;
   username?: string;
+  onLogout?: () => void;
 }
 
 const COLLAPSED_KEY = "medos_sidebar_collapsed";
@@ -66,12 +83,20 @@ const COLLAPSED_KEY = "medos_sidebar_collapsed";
 export function Sidebar({
   activeNav,
   setActiveNav,
+  chatSessions = [],
+  activeChatId,
+  onNewChat,
+  onSelectChat,
+  onDeleteChat,
   language = "en",
   isAuthenticated = false,
+  isAdmin = false,
   username,
+  onLogout,
 }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [bottomMenuOpen, setBottomMenuOpen] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -150,6 +175,55 @@ export function Sidebar({
         <nav className="flex-1 overflow-y-auto space-y-0.5">
           <NavItem icon={Home} label={t("nav_home", language)} active={activeNav === "home"} onClick={() => setActiveNav("home")} collapsed={collapsed} />
           <NavItem icon={MessageCircle} label={t("nav_ask", language)} active={activeNav === "chat"} onClick={() => setActiveNav("chat")} collapsed={collapsed} />
+          {!collapsed && (
+            <>
+              <div className="mt-2 mb-2 px-2">
+                <button
+                  onClick={() => onNewChat?.()}
+                  className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-brand-gradient text-white text-sm font-semibold hover:brightness-110 transition-all"
+                >
+                  <Plus size={14} />
+                  New chat
+                </button>
+              </div>
+              {chatSessions.length > 0 && (
+                <div className="space-y-1 mb-3 px-2">
+                  {chatSessions.slice(0, 8).map((session) => (
+                    <div
+                      key={session.id}
+                      className={`group flex items-center gap-2 rounded-lg px-2 py-1.5 ${
+                        activeChatId === session.id && activeNav === "chat"
+                          ? "bg-brand-500/10 border border-brand-500/20"
+                          : "hover:bg-surface-2"
+                      }`}
+                    >
+                      <button
+                        onClick={() => {
+                          onSelectChat?.(session.id);
+                          setActiveNav("chat");
+                        }}
+                        className="flex-1 text-left min-w-0"
+                        title={session.title}
+                      >
+                        <span className="text-xs text-ink-base truncate block">
+                          {session.title}
+                        </span>
+                      </button>
+                      {chatSessions.length > 1 && (
+                        <button
+                          onClick={() => onDeleteChat?.(session.id)}
+                          className="opacity-0 group-hover:opacity-100 text-ink-subtle hover:text-danger-500 transition-opacity"
+                          title="Delete chat"
+                        >
+                          <Trash2 size={12} />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
 
           {!collapsed && <SectionLabel>{t("nav_health_tracker", language)}</SectionLabel>}
           {collapsed && <div className="my-2 border-t border-line/50" />}
@@ -157,203 +231,149 @@ export function Sidebar({
           <NavItem icon={Heart} label={t("nav_dashboard", language)} active={activeNav === "health-dashboard"} onClick={() => setActiveNav("health-dashboard")} collapsed={collapsed} />
           <NavItem icon={Calendar} label={t("nav_schedule", language)} active={activeNav === "schedule"} onClick={() => setActiveNav("schedule")} collapsed={collapsed} />
           <NavItem icon={Pill} label={t("nav_medications", language)} active={activeNav === "medications"} onClick={() => setActiveNav("medications")} collapsed={collapsed} />
+          <NavItem icon={Package} label={t("medicines_title", language)} active={activeNav === "my-medicines"} onClick={() => setActiveNav("my-medicines")} collapsed={collapsed} />
           <NavItem icon={Calendar} label={t("nav_appointments", language)} active={activeNav === "appointments"} onClick={() => setActiveNav("appointments")} collapsed={collapsed} />
           <NavItem icon={Activity} label={t("nav_vitals", language)} active={activeNav === "vitals"} onClick={() => setActiveNav("vitals")} collapsed={collapsed} />
           <NavItem icon={FileText} label={t("nav_records", language)} active={activeNav === "records"} onClick={() => setActiveNav("records")} collapsed={collapsed} />
-          <NavItem icon={Package} label="My Medicines" active={activeNav === "my-medicines"} onClick={() => setActiveNav("my-medicines")} collapsed={collapsed} />
+          <NavItem icon={Contact} label="Contacts" active={activeNav === "contacts"} onClick={() => setActiveNav("contacts")} collapsed={collapsed} />
 
           {!collapsed && <SectionLabel>{t("nav_tools", language)}</SectionLabel>}
           {collapsed && <div className="my-2 border-t border-line/50" />}
 
           <NavItem icon={AlertTriangle} label={t("nav_emergency", language)} active={activeNav === "emergency"} onClick={() => setActiveNav("emergency")} urgent collapsed={collapsed} />
+          <NavItem icon={MapPin} label="Nearby" active={activeNav === "nearby"} onClick={() => setActiveNav("nearby")} collapsed={collapsed} />
           <NavItem icon={BookOpen} label={t("nav_topics", language)} active={activeNav === "topics"} onClick={() => setActiveNav("topics")} collapsed={collapsed} />
           <NavItem icon={Share2} label="Share" active={activeNav === "share"} onClick={() => setActiveNav("share")} collapsed={collapsed} />
           <NavItem icon={Clock} label={t("nav_history", language)} active={activeNav === "history"} onClick={() => setActiveNav("history")} collapsed={collapsed} />
+
+          {isAdmin && (
+            <>
+              {!collapsed && <SectionLabel>Admin</SectionLabel>}
+              {collapsed && <div className="my-2 border-t border-line/50" />}
+              <NavItem icon={ShieldCheck} label="Admin" active={activeNav === "admin"} onClick={() => setActiveNav("admin")} collapsed={collapsed} />
+            </>
+          )}
         </nav>
 
         {/* ============================================================
-         * Bottom section.
-         *
-         * Two very different layouts:
-         *   - GUEST:  No hidden menus. Explicit Account + Preferences
-         *             groups with a single primary "Create free account"
-         *             CTA. Follows the pattern used by Notion / Slack /
-         *             MyFitnessPal on their signed-out shell.
-         *   - AUTH'd: Classic avatar button that pops an upward settings
-         *             drawer — same affordance users already know from
-         *             ChatGPT / Claude.
+         * Bottom settings drawer — like ChatGPT/Claude/HF Space.
+         * Shows user profile + settings menu that pops UP from the bottom.
          * ============================================================ */}
         <div className="mt-auto pt-3 border-t border-line/50 relative" ref={menuRef}>
-          {isAuthenticated ? (
-            <>
-              {/* Pop-up menu (opens upward) — authenticated only. */}
-              {bottomMenuOpen && !collapsed && (
-                <div className="absolute bottom-full left-0 right-0 mb-2 bg-surface-1 border border-line/60 rounded-2xl shadow-card overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200 z-50">
-                  <div className="p-2 space-y-0.5">
-                    <MenuItem icon={Settings} label={t("nav_settings", language)} shortcut="Ctrl+," onClick={() => navTo("settings")} />
-                    <MenuItem icon={Globe} label={`${t("settings_language", language)}`} detail={language.toUpperCase()} onClick={() => navTo("settings")} />
-                    <MenuItem icon={HelpCircle} label="Get help" onClick={() => window.open("https://github.com/ruslanmv/ai-medical-chatbot/issues", "_blank")} />
-
-                    <div className="my-1.5 border-t border-line/40" />
-
-                    <MenuItem icon={Smartphone} label="Install as App" onClick={() => {}} />
-                    <MenuItem icon={Share2} label="Share MedAI" onClick={() => { if (navigator.share) navigator.share({ title: "MedAI", url: window.location.origin }); }} />
-                    <MenuItem icon={Info} label="About MedAI" detail="v1.0" onClick={() => navTo("settings")} />
-
-                    <div className="my-1.5 border-t border-line/40" />
-
-                    <MenuItem icon={ExternalLink} label="Source Code" onClick={() => window.open("https://github.com/ruslanmv/ai-medical-chatbot", "_blank")} external />
-                    <MenuItem icon={ExternalLink} label="HuggingFace Space" onClick={() => window.open("https://huggingface.co/spaces/ruslanmv/MediBot", "_blank")} external />
-
-                    <div className="my-1.5 border-t border-line/40" />
-
-                    <div className="px-3 py-2">
-                      <p className="text-[10px] text-ink-subtle leading-snug">
-                        MedAI v1.0 · Free & Open Source
-                        <br />
-                        Zero data retention · {t("badge_private", language)}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Profile button — triggers the drawer when expanded,
-                  navigates straight to Profile when the sidebar is collapsed. */}
-              <button
-                onClick={() => {
-                  if (collapsed) {
-                    setActiveNav("profile");
-                  } else {
-                    setBottomMenuOpen(!bottomMenuOpen);
-                  }
-                }}
-                className={`w-full flex items-center rounded-xl transition-all hover:bg-surface-2 ${
-                  collapsed ? "justify-center p-2.5" : "gap-3 px-3 py-2.5"
-                }`}
-              >
-                <div
-                  className={`flex-shrink-0 rounded-full flex items-center justify-center font-bold text-xs bg-brand-gradient text-white ${
-                    collapsed ? "w-9 h-9" : "w-8 h-8"
-                  }`}
-                >
-                  {(username || "U")[0].toUpperCase()}
-                </div>
-
-                {!collapsed && (
+          {/* Pop-up menu (opens upward) */}
+          {bottomMenuOpen && !collapsed && (
+            <div className="absolute bottom-full left-0 right-0 mb-2 bg-surface-1 border border-line/60 rounded-2xl shadow-card overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-200 z-50">
+              <div className="p-2 space-y-0.5">
+                {/* Account section — first, most important */}
+                {isAuthenticated ? (
                   <>
-                    <div className="flex-1 min-w-0 text-left">
-                      <span className="text-sm font-semibold text-ink-base block truncate">
-                        {username || t("nav_profile", language)}
-                      </span>
-                      <span className="text-[10px] text-ink-subtle block">
-                        Account
-                      </span>
-                    </div>
-                    {bottomMenuOpen ? (
-                      <ChevronDown size={14} className="text-ink-subtle flex-shrink-0" />
-                    ) : (
-                      <ChevronUp size={14} className="text-ink-subtle flex-shrink-0" />
-                    )}
+                    <MenuItem icon={User2} label={t("nav_profile", language)} onClick={() => navTo("profile")} />
+                    <MenuItem icon={ClipboardList} label="Health Profile (EHR)" onClick={() => navTo("ehr-wizard")} />
+                    <MenuItem icon={LogOut} label="Log out" onClick={() => { setBottomMenuOpen(false); onLogout?.(); }} danger />
+                  </>
+                ) : (
+                  <>
+                    <MenuItem icon={LogIn} label="Log in / Create Account" onClick={() => navTo("login")} />
                   </>
                 )}
-              </button>
-            </>
-          ) : (
-            /* --------------------------------------------------------
-             * GUEST layout — explicit, flat, no hidden menus.
-             * -------------------------------------------------------- */
-            <div className={collapsed ? "space-y-1" : "space-y-3"}>
-              {collapsed ? (
-                /* Collapsed: single "Sign in" icon button. */
-                <button
-                  onClick={() => setActiveNav("login")}
-                  className="w-full flex items-center justify-center p-2.5 rounded-xl text-ink-base hover:bg-surface-2 transition-all"
-                  title="Log in"
-                  aria-label="Log in"
-                >
-                  <div className="w-9 h-9 rounded-full bg-surface-2 border border-line/60 flex items-center justify-center text-ink-muted">
-                    <LogIn size={16} />
-                  </div>
-                </button>
-              ) : (
-                <>
-                  {/* Account group — Log in + Create account. */}
-                  <div>
-                    <SectionLabel>Account</SectionLabel>
-                    <div className="space-y-0.5">
-                      <MenuItem icon={LogIn} label="Log in" onClick={() => navTo("login")} />
-                      <MenuItem icon={UserPlus} label="Create account" onClick={() => navTo("register")} />
-                    </div>
-                  </div>
 
-                  {/* Preferences — visible, not hidden behind an ellipsis. */}
-                  <div>
-                    <SectionLabel>Preferences</SectionLabel>
-                    <div className="space-y-0.5">
-                      <MenuItem
-                        icon={Settings}
-                        label={t("nav_settings", language)}
-                        onClick={() => navTo("settings")}
-                      />
-                      <MenuItem
-                        icon={Globe}
-                        label={t("settings_language", language)}
-                        detail={language.toUpperCase()}
-                        onClick={() => navTo("settings")}
-                      />
-                      <MenuItem
-                        icon={HelpCircle}
-                        label="Help"
-                        onClick={() =>
-                          window.open(
-                            "https://github.com/ruslanmv/ai-medical-chatbot/issues",
-                            "_blank",
-                          )
-                        }
-                      />
-                      <MenuItem
-                        icon={Info}
-                        label="About"
-                        detail="v1.0"
-                        onClick={() => navTo("settings")}
-                      />
-                    </div>
-                  </div>
+                <div className="my-1.5 border-t border-line/40" />
 
-                  {/* Primary CTA — single strongest action on the page. */}
-                  <button
-                    onClick={() => navTo("register")}
-                    className="w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-brand-gradient text-white text-sm font-semibold shadow-glow hover:opacity-95 active:scale-[0.99] transition-all"
-                  >
-                    <UserPlus size={16} strokeWidth={2.5} />
-                    Sign up free
-                  </button>
-                  <p className="text-center text-[10px] text-ink-subtle leading-snug px-2">
-                    Sync your health data across devices.
+                <MenuItem icon={Settings} label={t("nav_settings", language)} onClick={() => navTo("settings")} />
+                <MenuItem icon={Globe} label={t("settings_language", language)} detail={language.toUpperCase()} onClick={() => navTo("settings")} />
+                <MenuItem icon={HelpCircle} label="Get help" onClick={() => window.open("https://github.com/ruslanmv/ai-medical-chatbot/issues", "_blank")} />
+
+                <div className="my-1.5 border-t border-line/40" />
+
+                <MenuItem icon={Smartphone} label="Install as App" onClick={() => {}} />
+                <MenuItem icon={Share2} label="Share MedAI" onClick={() => { if (typeof navigator !== "undefined" && navigator.share) navigator.share({ title: "MedAI", url: window.location.origin }); }} />
+                <MenuItem icon={Info} label="About MedAI" detail="v1.0" onClick={() => { setBottomMenuOpen(false); setShowAbout(true); }} />
+
+                <div className="my-1.5 border-t border-line/40" />
+
+                <div className="px-3 py-2">
+                  <p className="text-[10px] text-ink-subtle leading-snug">
+                    MedAI v1.0 · Free & Open Source
                     <br />
-                    You’re browsing as a guest.
+                    Zero data retention · {t("badge_private", language)}
                   </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Bottom user section — ChatGPT/Claude pattern */}
+          {isAuthenticated ? (
+            /* Authenticated: avatar + name + menu toggle */
+            <button
+              onClick={() => collapsed ? setActiveNav("profile") : setBottomMenuOpen(!bottomMenuOpen)}
+              className={`w-full flex items-center rounded-xl transition-all hover:bg-surface-2 ${
+                collapsed ? "justify-center p-2.5" : "gap-3 px-3 py-2.5"
+              }`}
+            >
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-brand-gradient flex items-center justify-center text-white font-bold text-xs">
+                {(username || "U")[0].toUpperCase()}
+              </div>
+              {!collapsed && (
+                <>
+                  <div className="flex-1 min-w-0 text-left">
+                    <span className="text-sm font-medium text-ink-base block truncate">
+                      {username || "Account"}
+                    </span>
+                  </div>
+                  <MoreHorizontal size={16} className="text-ink-subtle flex-shrink-0" />
                 </>
               )}
-            </div>
+            </button>
+          ) : (
+            /* Guest: value-focused sign-up prompt — Notion/Spotify pattern.
+             * All features work without an account (localStorage).
+             * Account = cloud sync across devices. */
+            collapsed ? (
+              <button
+                onClick={() => setActiveNav("login")}
+                className="w-full flex justify-center p-2.5 rounded-xl text-ink-subtle hover:text-ink-base hover:bg-surface-2 transition-all"
+                title="Sign up to sync across devices"
+              >
+                <User2 size={20} />
+              </button>
+            ) : (
+              <div className="space-y-2">
+                {/* Subtle value message — not a gate, a benefit */}
+                <div className="px-3 py-2">
+                  <p className="text-[11px] text-ink-muted leading-snug">
+                    Sign up to sync your health data across all your devices.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setActiveNav("login")}
+                  className="w-full py-2.5 bg-brand-gradient text-white rounded-xl font-bold text-sm shadow-glow hover:brightness-110 transition-all"
+                >
+                  Sign up free
+                </button>
+                <button
+                  onClick={() => setActiveNav("login")}
+                  className="w-full py-2.5 border border-line/60 text-ink-base rounded-xl font-semibold text-sm hover:bg-surface-2 transition-all"
+                >
+                  Log in
+                </button>
+                <button
+                  onClick={() => setBottomMenuOpen(!bottomMenuOpen)}
+                  className="w-full flex items-center justify-center gap-1.5 py-1.5 text-ink-subtle hover:text-ink-base text-xs transition-colors"
+                >
+                  <MoreHorizontal size={14} />
+                </button>
+              </div>
+            )
           )}
         </div>
       </aside>
 
-      {/* Mobile bottom navigation */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-surface-1/95 backdrop-blur-xl border-t border-line/60 flex items-center justify-around px-1 z-50 safe-area-bottom">
-        <MobileNavButton icon={Home} label={t("nav_home", language)} active={activeNav === "home"} onClick={() => setActiveNav("home")} />
-        <MobileNavButton icon={MessageCircle} label={t("nav_ask", language)} active={activeNav === "chat"} onClick={() => setActiveNav("chat")} />
-        <MobileNavButton
-          icon={Heart}
-          label={t("nav_health", language)}
-          active={["health-dashboard", "medications", "appointments", "vitals", "records", "schedule", "my-medicines"].includes(activeNav)}
-          onClick={() => setActiveNav("health-dashboard")}
-        />
-        <MobileNavButton icon={AlertTriangle} label={t("nav_emergency", language)} active={activeNav === "emergency"} onClick={() => setActiveNav("emergency")} urgent />
-        <MobileNavButton icon={Settings} label={t("nav_settings", language)} active={activeNav === "settings"} onClick={() => setActiveNav("settings")} />
-      </div>
+      {/* Mobile bottom navigation — REMOVED.
+       * Mobile now uses AppDrawer (hamburger ☰ in header).
+       * This gives access to ALL features without the 5-tab limit. */}
+      {/* About modal */}
+      {showAbout && <AboutModal onClose={() => setShowAbout(false)} />}
     </>
   );
 }
@@ -378,6 +398,7 @@ function MenuItem({
   detail,
   shortcut,
   external,
+  danger,
   onClick,
 }: {
   icon: any;
@@ -385,12 +406,17 @@ function MenuItem({
   detail?: string;
   shortcut?: string;
   external?: boolean;
+  danger?: boolean;
   onClick: () => void;
 }) {
   return (
     <button
       onClick={onClick}
-      className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-ink-base hover:bg-surface-2 transition-colors"
+      className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+        danger
+          ? "text-danger-500 hover:bg-danger-500/10"
+          : "text-ink-base hover:bg-surface-2"
+      }`}
     >
       <Icon size={16} className="text-ink-subtle flex-shrink-0" />
       <span className="flex-1 text-left">{label}</span>

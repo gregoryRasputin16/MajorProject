@@ -134,8 +134,8 @@ export function ChatView({
       )}
 
       {/* Conversation area */}
-      <div className="flex-1 overflow-y-auto scroll-smooth">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8">
+      <div className="flex-1 overflow-y-auto scroll-smooth scroll-touch">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 pb-mobile-nav">
           {!hasMessages && (
             <div className="text-center mb-8 animate-fade-up">
               <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-brand-gradient shadow-glow mb-4">
@@ -192,19 +192,6 @@ export function ChatView({
             suggestions={suggestions}
             autoFocus
           />
-          <div className="flex items-center justify-between mt-3 px-1">
-            <p className="text-[11px] text-ink-subtle">
-              {t("ask_disclaimer", language)}
-            </p>
-            <button
-              onClick={onNavigateEmergency}
-              className="inline-flex items-center gap-1 text-[11px] font-semibold text-danger-500 hover:text-danger-600"
-            >
-              <AlertTriangle size={11} />
-              {t("home_emergency", language)}
-              <ChevronRight size={11} />
-            </button>
-          </div>
         </div>
       </div>
     </>

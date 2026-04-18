@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
-import { Heart } from "lucide-react";
-import { useGeoDetect } from "@/lib/hooks/useGeoDetect";
+import { useState, useEffect, useRef } from "react";
+import { Heart, Menu } from "lucide-react";
 import { ThemeProvider } from "./ThemeProvider";
 import { ThemeToggle } from "./ThemeToggle";
-import { EmergencyCTA } from "./chat/EmergencyCTA";
 import { Sidebar, NavView } from "./chat/Sidebar";
+import { AppDrawer } from "./chat/AppDrawer";
 import { RightPanel } from "./chat/RightPanel";
 import { NotificationBell } from "./chat/NotificationCenter";
 import { ChatView } from "./views/ChatView";
@@ -32,10 +31,13 @@ import { ProfileView } from "./views/ProfileView";
 import { EHRWizard } from "./views/EHRWizard";
 import { MyMedicinesView } from "./views/MyMedicinesView";
 import { ShareView } from "./views/ShareView";
+import { AdminView } from "./views/AdminView";
+import { NearbyView } from "./views/NearbyView";
+import { ContactsView } from "./views/ContactsView";
 import { DisclaimerBanner } from "./ui/DisclaimerBanner";
 import { OfflineBanner } from "./ui/OfflineBanner";
 import { InstallPrompt } from "./ui/InstallPrompt";
-import { buildPatientContext, todayISO } from "@/lib/health-store";
+import { buildPatientContext, buildContactsContext, todayISO } from "@/lib/health-store";
 import { t, type SupportedLanguage } from "@/lib/i18n";
 
 export default function MedAIApp() {
@@ -48,24 +50,22 @@ export default function MedAIApp() {
 
 function MedAIAppInner() {
   const [activeNav, setActiveNav] = useState<NavView>("home");
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const settings = useSettings();
   const auth = useAuth();
-  const { messages, isTyping, error, sendMessage, clearMessages } = useChat();
+  const {
+    messages,
+    sessions,
+    activeThreadId,
+    isTyping,
+    error,
+    sendMessage,
+    createNewChat,
+    switchChat,
+    deleteChat,
+  } = useChat();
   const health = useHealthStore(auth.token);
   const notif = useNotifications();
-
-  // IP-based auto-detection. Only applies if the user hasn't manually
-  // chosen a language yet; the manual override in Settings wins forever.
-  const onGeo = useCallback(
-    (g: { country: string; language: any; emergencyNumber: string }) => {
-      settings.applyGeo(g);
-    },
-    [settings],
-  );
-  useGeoDetect({
-    skip: !settings.isLoaded || settings.explicitLanguage,
-    onResult: onGeo,
-  });
 
   const handleSendMessage = (content: string) => {
     sendMessage(content, {
@@ -125,6 +125,13 @@ function MedAIAppInner() {
   const handleNavigate = (view: string) => {
     setActiveNav(view as NavView);
   };
+
+  // Sync language and direction to HTML element for i18n + RTL
+  useEffect(() => {
+    const doc = document.documentElement;
+    doc.lang = settings.language;
+    doc.dir = settings.language === "ar" || settings.language === "ur" ? "rtl" : "ltr";
+  }, [settings.language]);
 
   // Text size class
   const textSizeClass =
@@ -287,8 +294,39 @@ function MedAIAppInner() {
             language={settings.language}
           />
         );
+      case "nearby":
+        return (
+          <NearbyView
+            language={settings.language}
+            onSaveContact={(c) => health.addContact(c)}
+          />
+        );
+      case "contacts":
+        return (
+          <ContactsView
+            contacts={health.contacts}
+            onAdd={health.addContact}
+            onUpdate={health.editContact}
+            onDelete={health.deleteContact}
+            onNavigate={handleNavigate}
+            language={settings.language}
+          />
+        );
       case "share":
         return <ShareView language={settings.language} />;
+      case "admin":
+        return auth.user?.isAdmin ? (
+          <AdminView language={settings.language} token={auth.token} />
+        ) : (
+          <HomeView
+            language={settings.language}
+            country={settings.country}
+            emergencyNumber={settings.emergencyNumber}
+            onNavigate={handleNavigate}
+            onSendMessage={handleSendMessage}
+            onStartVoice={handleStartVoice}
+          />
+        );
       case "history":
         return (
           <HistoryView
@@ -300,10 +338,8 @@ function MedAIAppInner() {
           />
         );
       case "login":
-      case "register":
         return (
           <LoginView
-            initialFlow={activeNav === "register" ? "register" : "login"}
             onLogin={async (e, p) => {
               const res = await auth.login(e, p);
               if (res.ok) setActiveNav("home");
@@ -413,27 +449,65 @@ function MedAIAppInner() {
     >
       <OfflineBanner />
       <InstallPrompt />
+
+      {/* Mobile drawer navigation */}
+      <AppDrawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        activeKey={activeNav}
+        onNavigate={(key) => setActiveNav(key as NavView)}
+        onNewChat={() => { createNewChat(); setActiveNav("chat"); }}
+        chatSessions={sessions}
+        activeChatId={activeThreadId}
+        onSelectChat={switchChat}
+        onDeleteChat={deleteChat}
+        isAuthenticated={auth.isAuthenticated}
+        isAdmin={auth.user?.isAdmin}
+        username={auth.user?.displayName || auth.user?.email}
+        onLogout={() => { auth.logout(); setActiveNav("home"); }}
+        language={settings.language}
+      />
+
       <div className="flex flex-1 overflow-hidden">
       {/* Sidebar */}
       <Sidebar
         activeNav={activeNav}
         setActiveNav={setActiveNav}
+        chatSessions={sessions}
+        activeChatId={activeThreadId}
+        onNewChat={() => {
+          createNewChat();
+          setActiveNav("chat");
+        }}
+        onSelectChat={switchChat}
+        onDeleteChat={deleteChat}
         language={settings.language}
         advancedMode={settings.advancedMode}
         isAuthenticated={auth.isAuthenticated}
+        isAdmin={auth.user?.isAdmin}
         username={auth.user?.displayName || auth.user?.email}
+        onLogout={() => { auth.logout(); setActiveNav("home"); }}
       />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col relative overflow-hidden pb-14 md:pb-0">
+      <div className="flex-1 flex flex-col relative overflow-hidden">
         {/* Top Header — clean, mobile-first, always accessible */}
         <header className="h-14 sm:h-16 bg-surface-1/90 backdrop-blur-xl border-b border-line/50 flex items-center justify-between px-3 sm:px-8 sticky top-0 z-20">
-          {/* Mobile logo — larger tap target */}
-          <div className="flex items-center gap-2.5 md:hidden">
-            <div className="w-9 h-9 rounded-xl bg-brand-gradient flex items-center justify-center text-white shadow-soft">
-              <Heart size={16} />
+          {/* Mobile: hamburger menu + logo */}
+          <div className="flex items-center gap-2 md:hidden">
+            <button
+              onClick={() => setDrawerOpen(true)}
+              className="w-10 h-10 rounded-xl flex items-center justify-center text-ink-base hover:bg-surface-2 transition-all active:scale-95"
+              aria-label="Open menu"
+            >
+              <Menu size={20} />
+            </button>
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-lg bg-brand-gradient flex items-center justify-center text-white">
+                <Heart size={12} />
+              </div>
+              <span className="font-bold text-ink-base tracking-tight text-sm">MedAI</span>
             </div>
-            <span className="font-bold text-ink-base tracking-tight text-base">MedAI</span>
           </div>
 
           <h2 className="hidden md:block font-bold text-lg text-ink-base tracking-tight">
@@ -458,11 +532,6 @@ function MedAIAppInner() {
               onDismissAll={notif.dismissAll}
             />
             <ThemeToggle />
-            <EmergencyCTA
-              number={settings.emergencyNumber}
-              label={t("emergency_quick_label", settings.language)}
-              urgent
-            />
           </div>
         </header>
 

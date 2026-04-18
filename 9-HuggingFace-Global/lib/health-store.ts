@@ -1,18 +1,13 @@
 /**
  * MedAI Health Store — client-side health data persistence.
  *
- * All data is stored in localStorage as JSON, keyed per-user via
- * `scopedKey()` from ./storage-namespace (see that file for why). An
- * authenticated user reads/writes `medos:u:<userId>:<suffix>`; an
- * anonymous visitor reads/writes `medos:anon:<uuid>:<suffix>` in
- * sessionStorage only. Switching accounts on a shared browser wipes the
- * previous user's scoped keys, so one patient can never see another's EHR.
+ * All data is stored in localStorage as JSON. Zero server calls, zero
+ * accounts, fully private. The patient owns their data and can export
+ * it at any time as a JSON file (for backup or to share with a doctor).
  *
- * Each entity type gets its own scoped key so reads and writes are
- * independent (one corrupt key doesn't nuke everything).
+ * Each entity type gets its own localStorage key so reads and writes are
+ * scoped and independent (one corrupt key doesn't nuke everything).
  */
-
-import { scopedKey } from './storage-namespace';
 
 // ============================================================
 // Types
@@ -120,6 +115,33 @@ export interface ConversationSummary {
 }
 
 // ============================================================
+// Contacts — doctors, pharmacies, drugstores address book
+// ============================================================
+
+export type ContactType = 'doctor' | 'pharmacy' | 'drugstore' | 'hospital' | 'clinic' | 'other';
+
+export interface MedContact {
+  id: string;
+  name: string;
+  type: ContactType;
+  specialty?: string;    // e.g. "Cardiologist", "General Practitioner"
+  phone?: string;
+  email?: string;
+  address?: string;
+  postalCode?: string;
+  city?: string;
+  lat?: number;
+  lon?: number;
+  openingHours?: string;
+  notes?: string;
+  isFavorite?: boolean;
+  source?: string;       // e.g. "osm_overpass", "manual"
+  directionsUrl?: string;
+  mapsUrl?: string;
+  createdAt: string;
+}
+
+// ============================================================
 // EHR Profile — Electronic Health Record wizard data
 // ============================================================
 
@@ -202,12 +224,12 @@ export const ALLERGY_COMMON = [
 // EHR storage (single record per user, keyed as "ehr_profile")
 // ============================================================
 
-const EHR_KEY_SUFFIX = 'ehr_profile';
+const EHR_KEY = 'medos_ehr_profile';
 
 export function loadEHRProfile(): EHRProfile {
   if (typeof localStorage === 'undefined') return {};
   try {
-    const raw = localStorage.getItem(scopedKey(EHR_KEY_SUFFIX));
+    const raw = localStorage.getItem(EHR_KEY);
     return raw ? JSON.parse(raw) : {};
   } catch {
     return {};
@@ -217,7 +239,7 @@ export function loadEHRProfile(): EHRProfile {
 export function saveEHRProfile(profile: EHRProfile): void {
   if (typeof localStorage === 'undefined') return;
   try {
-    localStorage.setItem(scopedKey(EHR_KEY_SUFFIX), JSON.stringify(profile));
+    localStorage.setItem(EHR_KEY, JSON.stringify(profile));
   } catch {}
 }
 
@@ -342,40 +364,35 @@ export const FREQUENCY_LABELS: Record<Medication['frequency'], string> = {
 // Storage keys
 // ============================================================
 
-/**
- * Storage-key SUFFIXES (not full keys). The actual localStorage key is
- * resolved at every read/write via `scopedKey()`, so it is always
- * user-scoped. Do NOT build a full key from these suffixes yourself.
- */
 const KEYS = {
-  medications: 'medications',
-  medicationLogs: 'medication_logs',
-  appointments: 'appointments',
-  vitals: 'vitals',
-  records: 'records',
-  history: 'history',
-  medicines: 'medicines',
+  medications: 'medos_medications',
+  medicationLogs: 'medos_medication_logs',
+  appointments: 'medos_appointments',
+  vitals: 'medos_vitals',
+  records: 'medos_records',
+  history: 'medos_history',
+  medicines: 'medos_medicines',
+  contacts: 'medos_contacts',
 } as const;
 
 // ============================================================
-// Generic CRUD helpers — always resolve the suffix through scopedKey()
-// so every read/write lands in the current user's namespace.
+// Generic CRUD helpers
 // ============================================================
 
-function load<T>(suffix: string): T[] {
+function load<T>(key: string): T[] {
   if (typeof localStorage === 'undefined') return [];
   try {
-    const raw = localStorage.getItem(scopedKey(suffix));
+    const raw = localStorage.getItem(key);
     return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
   }
 }
 
-function save<T>(suffix: string, data: T[]): void {
+function save<T>(key: string, data: T[]): void {
   if (typeof localStorage === 'undefined') return;
   try {
-    localStorage.setItem(scopedKey(suffix), JSON.stringify(data));
+    localStorage.setItem(key, JSON.stringify(data));
   } catch {
     // Storage full or unavailable — silently fail.
   }
@@ -630,6 +647,44 @@ export function clearHistory(): void {
   save(KEYS.history, []);
 }
 
+// --- Contacts (address book) ---
+
+export function loadContacts(): MedContact[] {
+  return load<MedContact>(KEYS.contacts);
+}
+
+export function saveContact(contact: Omit<MedContact, 'id' | 'createdAt'>): MedContact {
+  const all = loadContacts();
+  const item: MedContact = { ...contact, id: genId(), createdAt: new Date().toISOString() };
+  all.push(item);
+  save(KEYS.contacts, all);
+  return item;
+}
+
+export function updateContact(id: string, patch: Partial<MedContact>): void {
+  const all = loadContacts().map((c) => c.id === id ? { ...c, ...patch } : c);
+  save(KEYS.contacts, all);
+}
+
+export function removeContact(id: string): void {
+  save(KEYS.contacts, loadContacts().filter((c) => c.id !== id));
+}
+
+/** Build a compact contacts context string for the AI chat. */
+export function buildContactsContext(): string {
+  const contacts = loadContacts();
+  if (contacts.length === 0) return '';
+  const lines = contacts.map((c) => {
+    const parts = [c.name];
+    if (c.type) parts.push(`(${c.type})`);
+    if (c.specialty) parts.push(c.specialty);
+    if (c.phone) parts.push(`tel:${c.phone}`);
+    if (c.address) parts.push(c.address);
+    return parts.join(' ');
+  });
+  return `\n[My contacts: ${lines.join('; ')}]`;
+}
+
 // ============================================================
 // Export all data as a single JSON object (for backup / sharing
 // with a doctor).
@@ -646,6 +701,7 @@ export interface HealthExport {
   medicines: MedicineItem[];
   history: ConversationSummary[];
   ehrProfile: EHRProfile;
+  contacts: MedContact[];
 }
 
 export function exportAllHealthData(): HealthExport {
@@ -660,6 +716,7 @@ export function exportAllHealthData(): HealthExport {
     medicines: loadMedicines(),
     history: loadHistory(),
     ehrProfile: loadEHRProfile(),
+    contacts: loadContacts(),
   };
 }
 

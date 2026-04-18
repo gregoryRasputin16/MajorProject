@@ -29,12 +29,6 @@ interface LoginViewProps {
     newPassword: string,
   ) => Promise<{ ok: boolean; error?: string }>;
   language: SupportedLanguage;
-  /**
-   * Which tab to open on mount. Defaults to "login". Pass "register" from
-   * call-sites that represent a clear sign-up intent (e.g. the sidebar's
-   * "Create account" entry) so the user lands directly on the right form.
-   */
-  initialFlow?: AuthFlow;
 }
 
 export function LoginView({
@@ -42,9 +36,8 @@ export function LoginView({
   onRegister,
   onForgotPassword,
   onResetPassword,
-  initialFlow = "login",
 }: LoginViewProps) {
-  const [flow, setFlow] = useState<AuthFlow>(initialFlow);
+  const [flow, setFlow] = useState<AuthFlow>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");

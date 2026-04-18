@@ -8,11 +8,11 @@ import type { MedicineItem, MedicineForm } from "@/lib/health-store";
  * which injects the HF_TOKEN_INFERENCE server-side and forwards
  * to the Medicine Scanner Space. No token exposed to the browser.
  *
- * On the Vercel frontend, /api/proxy/scan proxies to the HF backend.
+ * On the Vercel frontend, /api/scan proxies to the HF backend.
  * On the HF backend, /api/scan proxies to the Scanner Space.
  */
-const SCAN_API = "/api/proxy/scan";
-const HEALTH_API = "/api/proxy/scan";
+const SCAN_API = "/api/scan";
+const HEALTH_API = "/api/scan";
 
 interface ScanResult {
   success: boolean;
