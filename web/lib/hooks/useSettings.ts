@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import type { Provider, Preset } from "../types";
 import {
-  detectLanguage,
-  detectCountry,
   getEmergencyNumber,
   type SupportedLanguage,
 } from "../i18n";
@@ -56,19 +54,8 @@ export function useSettings() {
     if (savedApiKey) setApiKey(savedApiKey);
     if (savedHfToken) setHfToken(savedHfToken);
     if (savedAdvanced) setAdvancedMode(savedAdvanced === "true");
-    if (savedLanguage) {
-      setLanguage(savedLanguage);
-    } else {
-      // Auto-detect language on first load
-      const detected = detectLanguage();
-      setLanguage(detected);
-    }
-    if (savedCountry) {
-      setCountry(savedCountry);
-    } else {
-      const detected = detectCountry();
-      setCountry(detected);
-    }
+    if (savedLanguage) setLanguage(savedLanguage);
+    if (savedCountry) setCountry(savedCountry);
     if (savedVoice !== null) setVoiceEnabled(savedVoice === "true");
     if (savedReadAloud !== null) setReadAloud(savedReadAloud === "true");
     if (savedTextSize) setTextSize(savedTextSize);
@@ -78,7 +65,7 @@ export function useSettings() {
     if (savedEmergency) {
       setEmergencyNumber(savedEmergency);
     } else {
-      const detectedCountry = savedCountry || detectCountry();
+      const detectedCountry = savedCountry || "IN";
       setEmergencyNumber(getEmergencyNumber(detectedCountry));
     }
     if (savedExplicit !== null) setExplicitLanguage(savedExplicit === "true");

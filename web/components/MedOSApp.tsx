@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Heart, Menu } from "lucide-react";
-import { useGeoDetect } from "@/lib/hooks/useGeoDetect";
 import { ThemeProvider } from "./ThemeProvider";
 import { ThemeToggle } from "./ThemeToggle";
 import { Sidebar, NavView } from "./chat/Sidebar";
@@ -67,19 +66,6 @@ function MedAIAppInner() {
   } = useChat();
   const health = useHealthStore(auth.token);
   const notif = useNotifications();
-
-  // IP-based auto-detection. Only applies if the user hasn't manually
-  // chosen a language yet; the manual override in Settings wins forever.
-  const onGeo = useCallback(
-    (g: { country: string; language: any; emergencyNumber: string }) => {
-      settings.applyGeo(g);
-    },
-    [settings],
-  );
-  useGeoDetect({
-    skip: !settings.isLoaded || settings.explicitLanguage,
-    onResult: onGeo,
-  });
 
   const handleSendMessage = (content: string) => {
     sendMessage(content, {
