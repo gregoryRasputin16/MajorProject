@@ -178,3 +178,11 @@ cython_debug/
 *.json
 3-Modeling/credentials/api.json
 3-Modeling/credentials/api.json
+
+9-HuggingFace-Global/medos.db
+9-HuggingFace-Global/medos.db-shm
+9-HuggingFace-Global/medos.db-wal
+*.db
+*.db-shm
+*.db-wal
+
