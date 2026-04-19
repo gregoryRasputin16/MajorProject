@@ -17,3 +17,4 @@ class MetaSearchV2Request(BaseModel):
     locale: str = "en-US"
     transport_mode: Literal["walking", "driving"] = "walking"
     filters: MetaFilters = MetaFilters()
+

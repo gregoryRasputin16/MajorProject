@@ -289,3 +289,4 @@ function EventCard({ event }: { event: TimelineEvent }) {
     </div>
   );
 }
+

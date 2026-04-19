@@ -55,3 +55,4 @@ export const HERO_VARIANTS = [
     eyebrow: 'Free forever · 20 languages',
   },
 ] as const;
+

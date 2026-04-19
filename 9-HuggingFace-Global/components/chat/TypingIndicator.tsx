@@ -30,3 +30,4 @@ export function TypingIndicator({ label }: TypingIndicatorProps) {
     </div>
   );
 }
+

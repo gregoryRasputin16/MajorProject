@@ -456,3 +456,4 @@ export function NearbyView({ language, onSaveContact }: NearbyViewProps) {
     </div>
   );
 }
+

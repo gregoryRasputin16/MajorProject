@@ -120,3 +120,4 @@ def reset_environment() -> Generator[None, None, None]:
     yield
     os.environ.clear()
     os.environ.update(original_env)
+

@@ -82,3 +82,4 @@ def meta_search(lat: float, lon: float, radius_m: int, entity_type: str, limit: 
     _CACHE[cache_key] = (now, ranked)
     return ranked
 
+

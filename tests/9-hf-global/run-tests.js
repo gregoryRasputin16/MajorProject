@@ -401,3 +401,4 @@ if (failed > 0) {
   console.log(`\n\x1b[32mAll tests passed!\x1b[0m\n`);
   process.exit(0);
 }
+

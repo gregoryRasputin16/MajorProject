@@ -140,3 +140,4 @@ export async function PUT(req: Request) {
     return NextResponse.json({ error: error?.message || 'Failed to update config' }, { status: 500 });
   }
 }
+

@@ -15,3 +15,4 @@ def _load_geo():
 def test_haversine_zero_distance():
     geo = _load_geo()
     assert isclose(geo.haversine_m(40.0, -70.0, 40.0, -70.0), 0.0, abs_tol=0.01)
+

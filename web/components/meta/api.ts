@@ -93,3 +93,4 @@ export function osmEmbedMapUrl(centerLat: number, centerLon: number, markerLat?:
   const marker = markerLat != null && markerLon != null ? `&marker=${markerLat},${markerLon}` : "";
   return `https://www.openstreetmap.org/export/embed.html?bbox=${left}%2C${bottom}%2C${right}%2C${top}&layer=mapnik${marker}`;
 }
+

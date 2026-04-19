@@ -150,3 +150,4 @@ export function useNotifications() {
 
   return { notifications: active, count, dismiss, dismissAll };
 }
+

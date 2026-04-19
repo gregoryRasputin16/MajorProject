@@ -205,3 +205,4 @@ export async function GET(req: Request): Promise<Response> {
     return new Response('OG image generation failed', { status: 500 });
   }
 }
+

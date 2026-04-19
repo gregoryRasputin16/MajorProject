@@ -29,3 +29,4 @@ export function Toggle({ label, description, enabled, setEnabled }: ToggleProps)
     </div>
   );
 }
+

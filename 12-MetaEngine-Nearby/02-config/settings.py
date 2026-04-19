@@ -8,3 +8,4 @@ class Settings(BaseModel):
 
 settings = Settings()
 
+

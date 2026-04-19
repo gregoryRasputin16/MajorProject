@@ -79,3 +79,4 @@ export function VoiceInput({ onTranscript, language, compact }: VoiceInputProps)
     </button>
   );
 }
+

@@ -46,3 +46,4 @@ export function isPWAInstalled(): boolean {
     (window.navigator as Navigator & { standalone?: boolean }).standalone === true
   );
 }
+

@@ -73,3 +73,4 @@ This platform is a simulation and should not replace professional medical advice
 ---
 
 **medical Interviewer ** stands as a testament to the potential of advanced AI technologies in simulating medical psychology interviews and generating detailed reports. For technical details, refer to the in-code documentation. This platform offers a valuable tool for educational and research purposes by providing an enriching and interactive user experience.
+

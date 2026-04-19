@@ -353,3 +353,4 @@ export function getSymptomBySlug(slug: string): Symptom | undefined {
 export function getAllSymptomSlugs(): string[] {
   return SYMPTOMS.map((s) => s.slug);
 }
+

@@ -40,3 +40,4 @@ def test_meta_search_dedup_and_limit(monkeypatch):
     out = service.meta_search(40.0, -70.0, 1000, "pharmacy", limit=10)
     assert len(out) == 1
     assert out[0]["name"] == "A Clinic"
+

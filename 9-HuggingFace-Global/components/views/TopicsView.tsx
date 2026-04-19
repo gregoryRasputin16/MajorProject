@@ -82,3 +82,4 @@ export function TopicsView({ language, onSelectTopic }: TopicsViewProps) {
     </div>
   );
 }
+

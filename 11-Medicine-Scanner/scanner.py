@@ -351,3 +351,4 @@ def scan_medicine(image: Image.Image, hf_token: str = "") -> dict:
         "model_used": model_used,
     }
 
+

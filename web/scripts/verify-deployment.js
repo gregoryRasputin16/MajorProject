@@ -255,3 +255,4 @@ runVerification().catch(err => {
   error(`\nVerification failed with error: ${err.message}`);
   process.exit(1);
 });
+

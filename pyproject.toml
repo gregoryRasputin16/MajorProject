@@ -260,3 +260,4 @@ good-names = ["i", "j", "k", "ex", "Run", "_", "id", "df", "lr"]
 [tool.pylint.design]
 max-args = 10
 max-attributes = 15
+

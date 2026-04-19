@@ -218,3 +218,4 @@ export function buildRAGContext(query: string): string {
 
   return `\n\nRelevant medical knowledge:\n${context}\n\nUse the above medical knowledge to inform your response, but always use your general medical training as well. Do not simply copy the context — synthesize it into a helpful, conversational response.`;
 }
+

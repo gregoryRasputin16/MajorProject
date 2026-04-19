@@ -193,3 +193,4 @@ ci: install-ci test build ## Full CI pipeline: install, test, build
 .PHONY: check
 check: test-structure test-providers test-i18n test-safety ## Quick check (no install needed)
 	@echo "$(GREEN)All structural checks passed!$(NC)"
+

@@ -240,3 +240,4 @@ export function seedAdmin(): void {
 
   console.log(`[Admin] Default admin seeded: ${adminEmail}`);
 }
+

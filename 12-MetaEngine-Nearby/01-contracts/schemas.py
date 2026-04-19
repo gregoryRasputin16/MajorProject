@@ -25,3 +25,4 @@ class NearbyItem(BaseModel):
 class NearbyResponse(BaseModel):
     count: int
     results: List[NearbyItem]
+

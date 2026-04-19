@@ -21,3 +21,4 @@ def score_result(item: Dict, verified_only: bool = False) -> Dict:
         },
     }
     return item
+

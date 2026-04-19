@@ -48,3 +48,4 @@ export async function fetchCount(): Promise<number> {
   }
   return 0;
 }
+

@@ -88,3 +88,4 @@ def meta_search_v2(req: MetaSearchV2Request, response: Response):
 @app.post("/nearby")
 def nearby(req: NearbyRequest):
     return meta_search(req)
+

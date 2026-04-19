@@ -33,3 +33,4 @@ export function OfflineBanner() {
     </div>
   );
 }
+

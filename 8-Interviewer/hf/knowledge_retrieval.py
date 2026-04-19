@@ -89,3 +89,4 @@ def get_initial_question(interview_chain):
         "question_number": 1
     })
     return result.get("answer", "Could you tell me a little bit about yourself and what brings you here today?")
+

@@ -17,3 +17,4 @@ class RegistryProvider:
                 "last_updated": None,
             },
         }
+

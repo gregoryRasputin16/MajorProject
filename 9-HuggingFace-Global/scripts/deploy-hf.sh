@@ -95,3 +95,4 @@ git remote add hf "https://ruslanmv:${HF_TOKEN}@huggingface.co/spaces/ruslanmv/M
 git push hf main --force 2>&1 | tail -5
 
 echo "[deploy] ✓ Done — https://huggingface.co/spaces/ruslanmv/MediBot"
+

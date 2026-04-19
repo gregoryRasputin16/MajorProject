@@ -82,3 +82,4 @@ export async function GET(req: Request) {
 
   return NextResponse.json({ entries, limit, offset, hasMore });
 }
+

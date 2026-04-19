@@ -32,3 +32,4 @@ describe('Provider Types', () => {
     expect(PROVIDER_CONFIGS.ollama.requiresApiKey).toBe(false);
   });
 });
+

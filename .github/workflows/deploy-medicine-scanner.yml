@@ -88,3 +88,4 @@ jobs:
           api.add_space_secret('${HF_USERNAME}/Medicine-Scanner', 'HF_TOKEN', os.environ['HF_TOKEN_INFERENCE'])
           print('HF_TOKEN secret set on Medicine-Scanner Space')
           "
+

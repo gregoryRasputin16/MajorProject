@@ -321,3 +321,4 @@ function getTrend(
   if (Math.abs(diff) < 1) return "stable";
   return diff > 0 ? "up" : "down";
 }
+

@@ -106,3 +106,4 @@ export const PROVIDER_CONFIGS: Record<Provider, ProviderConfig> = {
     ],
   },
 };
+

@@ -356,3 +356,4 @@ export function useHealthStore(authToken?: string | null) {
     downloadAll: hs.downloadHealthData,
   };
 }
+

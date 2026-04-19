@@ -16,3 +16,4 @@ SPACE_ID="$1"
 PRIVATE_FLAG="${2:-}"
 
 python "$(dirname "$0")/deploy_hf_space.py" --space-id "$SPACE_ID" ${PRIVATE_FLAG}
+

@@ -19,3 +19,4 @@ export function DisclaimerBanner({ language }: DisclaimerBannerProps) {
     </div>
   );
 }
+

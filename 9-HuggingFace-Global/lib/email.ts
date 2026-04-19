@@ -146,3 +146,4 @@ export async function sendWelcomeEmail(to: string): Promise<boolean> {
     `),
   );
 }
+

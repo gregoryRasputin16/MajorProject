@@ -26,3 +26,4 @@ const DISCLAIMERS: Record<string, string> = {
 export function getDisclaimer(language: SupportedLanguage): string {
   return DISCLAIMERS[language] || DISCLAIMERS.en;
 }
+

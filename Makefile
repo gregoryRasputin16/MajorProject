@@ -224,3 +224,4 @@ info: ## Show project information
 	@echo "$(YELLOW)Description:$(NC)    Production-ready AI Medical Chatbot"
 	@echo ""
 	@echo "$(BLUE)═══════════════════════════════════════════════════════════════$(NC)"
+

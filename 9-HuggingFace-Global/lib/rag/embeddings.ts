@@ -58,3 +58,4 @@ export function cosineSimilarity(a: number[], b: number[]): number {
   const denominator = Math.sqrt(normA) * Math.sqrt(normB);
   return denominator === 0 ? 0 : dotProduct / denominator;
 }
+

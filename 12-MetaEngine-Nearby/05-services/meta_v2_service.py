@@ -63,3 +63,4 @@ def search_v2(payload: Dict) -> Dict:
         "query": payload,
         "results": enriched,
     }
+

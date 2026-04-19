@@ -36,3 +36,4 @@ export function requireAdmin(req: Request): AuthUser | null {
   const user = authenticateRequest(req);
   return user?.isAdmin ? user : null;
 }
+

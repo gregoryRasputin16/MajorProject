@@ -113,3 +113,4 @@ class TestDatabaseIntegration:
         mock_milvus_connection.return_value = True
         # Test that search query is properly formatted
         assert len(sample_medical_question) > 0
+

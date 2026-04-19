@@ -241,3 +241,4 @@ Nombre, apellido y cédula del médico tratante: _______________________________
 
 
 
+

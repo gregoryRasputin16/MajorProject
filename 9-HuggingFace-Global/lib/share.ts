@@ -90,3 +90,4 @@ export const FOLLOW_UP_PROMPTS = [
   'Should I see a doctor?',
   'How can I prevent it?',
 ] as const;
+

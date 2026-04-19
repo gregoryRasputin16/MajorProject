@@ -49,3 +49,4 @@ export function useGeoDetect({ skip, onResult }: Options): void {
     };
   }, [skip, onResult]);
 }
+

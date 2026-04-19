@@ -744,3 +744,4 @@ export function todayISO(): string {
 export function nowTimeISO(): string {
   return new Date().toTimeString().slice(0, 5);
 }
+

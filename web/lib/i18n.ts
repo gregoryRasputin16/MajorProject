@@ -2963,3 +2963,4 @@ export function detectEmergencyKeywords(text: string, lang: string): boolean {
   const lower = text.toLowerCase();
   return keywords.some((kw) => lower.includes(kw.toLowerCase()));
 }
+

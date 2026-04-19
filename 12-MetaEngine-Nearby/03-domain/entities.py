@@ -12,3 +12,4 @@ class Place:
     address: Optional[str] = None
     phone: Optional[str] = None
     opening_hours: Optional[str] = None
+

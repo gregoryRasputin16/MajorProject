@@ -76,3 +76,4 @@ def test_search_v2_adds_eta_routing_and_score(monkeypatch):
     assert row["eta_min"] == 3
     assert "routing" in row and "walk_url" in row["routing"]
     assert "score" in row and row["score"]["total"] == 0.88
+

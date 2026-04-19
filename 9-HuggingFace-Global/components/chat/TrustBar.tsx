@@ -33,3 +33,4 @@ export function TrustBar({ language, compact = false }: TrustBarProps) {
     </div>
   );
 }
+

@@ -38,3 +38,4 @@ else
 fi
 
 echo "✅ Sync and push completed for branch: $CURRENT_BRANCH"
+

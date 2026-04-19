@@ -73,3 +73,4 @@ export function createSwipeDetector(
     element.removeEventListener('touchend', handleTouchEnd);
   };
 }
+

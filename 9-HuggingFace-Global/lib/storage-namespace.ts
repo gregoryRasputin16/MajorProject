@@ -265,3 +265,4 @@ export function setStorageUserContext(userId: string | null | undefined): void {
 export function __resetStorageNamespaceForTests(): void {
   currentCtx = null;
 }
+

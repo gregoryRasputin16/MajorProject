@@ -57,3 +57,4 @@ jobs:
       - name: Build application
         run: make -f 9-HuggingFace-Global/Makefile build
 
+

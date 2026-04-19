@@ -231,3 +231,4 @@ export function useSettings() {
     setEmergencyNumber,
   };
 }
+

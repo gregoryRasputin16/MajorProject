@@ -15,3 +15,4 @@ __email__ = "contact@ruslanmv.com"
 __license__ = "Apache-2.0"
 
 __all__ = ["app"]
+

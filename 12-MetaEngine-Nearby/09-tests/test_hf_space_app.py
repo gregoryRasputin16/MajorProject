@@ -33,3 +33,4 @@ def test_space_meta_search_all_returns_categories(monkeypatch):
     results = app.meta_search(40.0, -70.0, 1000, "all", 10)
     categories = {r["category"] for r in results}
     assert categories == {"pharmacy", "doctor"}
+

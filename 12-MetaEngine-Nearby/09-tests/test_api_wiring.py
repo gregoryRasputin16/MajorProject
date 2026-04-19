@@ -70,3 +70,4 @@ def test_meta_search_v1_and_v2_routes_are_wired(monkeypatch):
     assert response.headers.get("X-MetaEngine-Version") == "2"
     assert v2_json["count"] == 1
     assert "eta_min" in v2_json["results"][0]
+

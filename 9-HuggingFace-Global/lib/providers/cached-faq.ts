@@ -118,3 +118,4 @@ export function getCachedFAQResponse(query: string): string {
 
   return DEFAULT_RESPONSE;
 }
+

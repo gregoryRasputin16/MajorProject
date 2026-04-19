@@ -182,3 +182,4 @@ export async function DELETE(req: Request) {
     message: `Account ${user.email} and all associated data permanently deleted.`,
   });
 }
+

@@ -71,3 +71,4 @@ done
 
 VIEWS=$(ls "$HF_DIR/components/views/" | wc -l)
 echo "[sync] ✓ Done: $VIEWS views synced, API paths rewritten"
+

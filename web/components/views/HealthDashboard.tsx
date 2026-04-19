@@ -351,3 +351,4 @@ function NavButton({ label, onClick }: { label: string; onClick: () => void }) {
     </button>
   );
 }
+

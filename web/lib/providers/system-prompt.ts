@@ -17,3 +17,4 @@ export function resolveSystemPrompt(context?: MedicalContext): string {
 }
 
 export type { MedicalContext };
+

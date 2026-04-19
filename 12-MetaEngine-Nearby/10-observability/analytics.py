@@ -9,3 +9,4 @@ def track(event_name: str, payload: dict) -> str:
         "payload": payload,
     }
     return json.dumps(event)
+

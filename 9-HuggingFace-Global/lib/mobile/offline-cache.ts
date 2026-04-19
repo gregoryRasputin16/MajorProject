@@ -82,3 +82,4 @@ export function onConnectivityChange(
     window.removeEventListener('offline', handleOffline);
   };
 }
+

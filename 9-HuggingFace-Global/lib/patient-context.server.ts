@@ -113,3 +113,4 @@ export function stripInjectedPatientContext(content: string): string {
     .replace(/(^|\n)\s*\[Patient:[^\]\n]*\](?=\n|$)/g, '')
     .replace(/^\n+/, '');
 }
+

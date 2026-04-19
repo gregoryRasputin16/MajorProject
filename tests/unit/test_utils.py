@@ -79,3 +79,4 @@ class TestConfigurationLoading:
         # Test that missing env var returns None
         assert os.getenv("NONEXISTENT_VAR") is None
         assert os.getenv("NONEXISTENT_VAR", "default") == "default"
+

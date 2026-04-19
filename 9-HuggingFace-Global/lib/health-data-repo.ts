@@ -53,3 +53,4 @@ export function decodeHealthPayload<T = unknown>(stored: string | null | undefin
     return (decoded as unknown) as T;
   }
 }
+
